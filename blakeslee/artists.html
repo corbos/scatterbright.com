@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Blakeslee Gallery - Artists</title>
+<link rel="stylesheet" href="main.css" type="text/css" media="screen, projection" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+<style>
+#slides{     
+    width:400px;
+    height:333px;
+}
+#slides img{
+    width:400px;
+    height:333px;
+    border: 2px solid #6E6F71;
+}
+ul {
+	margin:0 0 3 0;
+	padding:0;
+}
+li{
+	display:inline;
+	padding-right:40px;
+}
+li.last{
+	display:inline;
+	padding-right:5px;	
+}
+a {
+	color:#DBDADA;	
+	text-decoration:none;
+}
+a:hover {
+	color:#DBDADA;
+	text-decoration:underline;
+}
+a.current{
+	color:#6E6F71;	
+	text-decoration:none;
+}
+a.current:hover {
+	color:#6E6F71;	
+	text-decoration:underline;
+}
+p{
+    margin:25px 45px 0px 45px;  
+}
+.imgp{   
+    padding-bottom:25px;
+    border-bottom: 1px solid #6E6F71;
+    text-align:center;
+}
+.imgp img{
+    border: 2px solid #6E6F71;
+    vertical-align:top;
+    margin-right:65px;
+}
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {      
+        $("a[rel=grp]").fancybox({
+            'transitionIn'		: 'none',
+            'transitionOut'		: 'none',
+            'titlePosition' 	: 'over',
+            'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+                return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+            }
+        });
+    });
+</script>
+</head>
+<body>
+<div id="content" style="margin-top:15px;">
+    <div style="padding:25px 50px 0px 15px;">
+        <div style="float:right;">
+            <div style="border-bottom:3px solid #A81726;margin-top:45px;" >
+                <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#" class="current">Artists</a></li>
+                <li><a href="#">Contact</a></li>           
+                </ul>
+            </div> 
+           
+         </div>
+        <div style="margin-top:25px;">
+            <img src="logosmalltextonly.gif" border="0" alt="Logo" />
+        </div>
+        <div style="clear:both;">&nbsp;</div>      
+    </div> 
+    <p>
+    <span style="font-size:1.2em;text-decoration:underline;">Kurt Knoblesdorf</span>&nbsp;&nbsp;      
+    </p>
+    <p>
+    Meus veniam amet ideo lucidus uxor, luctus at plaga plaga illum odio. Illum, nisl populus immitto iaceo iusto ullamcorper wisi. Appellatio fatua quibus vel vereor delenit ad premo at brevitas. Importunus ille, validus bene qui distineo saluto enim refoveo vel commoveo magna, delenit saepius. Quod imputo, dolor persto pertineo et, qui loquor. Eu pecus augue defui sino feugait. Iusto, illum nibh iriure nobis consequat si, fatua appellatio opto. 
+    </p>
+    <p>
+    <span style="font-size:0.8em;">[Click on an image for a closer view.]</span>
+    </p>
+    <p class="imgp">        
+        <a rel="grp" href="images/one_large.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="images/one_small.jpg" /></a>
+		<a rel="grp" href="images/two_large.jpg" title=""><img alt="" src="images/two_small.jpg" /></a>
+        <a rel="grp" href="images/three_large.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="images/three_small.jpg" /></a>
+		<a rel="grp" href="images/four_large.jpg" title=""><img alt="" src="images/four_small.jpg" /></a>
+    </p>
+    <p class="imgp">
+        <a rel="grp" href="images/five_large.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="images/five_small.jpg" /></a>
+		<a rel="grp" href="images/six_large.jpg" title=""><img alt="" src="images/six_small.jpg" /></a>
+        <a rel="grp" href="images/seven_large.jpg" title="Lorem ipsum dolor sit amet"><img alt="" src="images/seven_small.jpg" /></a>
+		<a rel="grp" href="images/eight_large.jpg" title=""><img alt="" src="images/eight_small.jpg" /></a>
+    </p>
+    
+    <div id="footer">
+        Blakeslee Gallery, P.O. Box 123, Anytown, AnyState 55555, USA - &copy;Blakeslee Enterprises 2011
+    </div>
+</div>
+</body>
+</html>

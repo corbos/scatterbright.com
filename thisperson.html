@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create a "This Person" Facebook/Google+ message</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta name="title" content="Create an enchanced social network message" />
+<meta name="description" content="A free tool to create the next internet meme" />
+<link rel="image_src" type="image/jpeg" href="image_src.jpg" />
+<link rel="stylesheet" href="scatterbright.css" type="text/css" />
+<style>
+#thecanvas{   
+    display:none;
+    width:400px;
+    height:400px;
+}
+#txtFontPx{
+    width:25px;
+}
+#divInput{
+    width:400px;
+    float:left;
+    margin-right:15px;   
+}
+#divResult{
+    width:425px;
+    float:right;   
+}
+#divExample{
+    padding-left:25px;
+}
+#divBroken{
+    margin:15px auto;
+    width:800px;
+    display:none;
+}
+#imgExample{
+    border: 1px solid #999999;
+}
+.clearFloat{
+    clear:both;
+}
+.super{
+    font-size:12px;
+    vertical-align:super;
+}
+</style>
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jscolor/jscolor.js"></script>
+<script type="text/javascript">
+function drawArrow(ctx){
+    ctx.fillStyle = '#' + document.getElementById('txtArrow').value;
+    ctx.beginPath();
+    ctx.moveTo(15,15);
+    ctx.lineTo(30,70);
+    ctx.lineTo(40,60);
+    ctx.lineTo(90,110);
+    ctx.lineTo(110,90);
+    ctx.lineTo(60,40);
+    ctx.lineTo(70,30);
+    ctx.fill();
+}
+function drawText(ctx){
+    var txt = document.getElementById('txt').value;
+    ctx.fillStyle = '#' + document.getElementById('txtFontColor').value;
+    var fontPx = 32;
+    var fontPxInt = parseInt(document.getElementById('txtFontPx').value);
+    if(!isNaN(fontPxInt)) { 
+        fontPx = fontPxInt;
+    }
+    var font = document.getElementById('ddlFont').value;
+    if(font.indexOf(' ') >= 0)
+        font = '"' + font + '"';      
+  
+    ctx.font = ($('#chkBold').is(':checked') ? '700' : '400') + ' ' + fontPx.toString() + 'px ' + font;   
+    ctx.fillText('This Person', 115, 115);
+    var lines = txt.replace('\r\n', '\n').replace('\r','\n').split('\n');
+    fontPx += 4;
+    for(var i = 0; i < lines.length; i++){
+        ctx.fillText(lines[i], 20, 115 + fontPx * (i + 1));
+    } 
+}
+function withDropShadow(ctx,func){
+    ctx.save();
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;  
+    ctx.shadowBlur = 5; 
+    ctx.shadowColor = '#888888'; 
+    func(ctx);
+    ctx.restore();
+}
+function draw(){
+    
+    var canvas = document.getElementById('thecanvas');    
+    var ctx = canvas.getContext('2d');  
+    
+    ctx.clearRect(0,0,canvas.width, canvas.height);  
+    
+    ctx.fillStyle = '#' + document.getElementById('txtBorder').value;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    
+    ctx.fillStyle = '#' + document.getElementById('txtBg').value;
+    ctx.fillRect(10,10,canvas.width - 20, canvas.height - 20);
+    
+    if($('#chkDropShadow').is(':checked')){
+        withDropShadow(ctx,drawArrow);
+        withDropShadow(ctx,drawText);
+    }
+    else{
+        drawArrow(ctx);
+        drawText(ctx);
+    }
+    
+    document.getElementById('img').src = canvas.toDataURL("image/png");
+}
+
+$(document).ready(function(){
+    var canvas = document.getElementById('thecanvas');
+    if(canvas.getContext && canvas.toDataURL){            
+        $('#txt,#txtFontPx').keyup(function(){       
+            draw();
+        });
+        $('#txtFontColor,#txtBg,#txtBorder,#txtArrow,#ddlFont,#chkBold,#chkDropShadow').change(function(){       
+            draw();
+        }); 
+        draw();         
+    }
+    else{
+        $('#divContent').hide();
+        $('#divBroken').show();
+    }
+});
+</script>
+</head>
+<body>
+<div id="divHeader">
+    <a href="index.html">
+        <img src="home.png" alt="Scatterbright Home" title="Home" />        
+    </a>
+    <a href="index.html">Scatterbright</a>
+</div>
+<div id="divContent">   
+    <canvas id="thecanvas" width="400" height="400">
+    Your browser does not support the canvas element. Sorry.
+    </canvas>
+    <h1>Create a "This Person" message for Facebook or Google+ in three easy steps!</h1>   
+    <p>
+    Do you have an important cause, meme, or insight to share with your social network?    
+    Which of these messages is more effective?
+    </p>
+    <div id="divExample">
+        <img id="imgExample" src="example.jpg" alt="Two Facebook messages" />
+    </div>
+    <p>
+    If your message could benefit from a punchy font, classy colors, or a big arrow pointing at your head,
+    make a "This Person" message today!
+    </p>
+    <div id="divInput">
+       
+        <h2>Step #1</h2>
+        <p>
+        Craft a pithy message, choose a high-impact font, and create
+        a persuasive palette.
+        </p>
+        <div>
+            <textarea id="txt" cols="35" rows="10">
+    loves coleslaw
+        
+        ...but hates
+        cabbage!   
+            </textarea>   
+        </div>
+        <div>
+            <span>Font</span>
+            <input type="text" id="txtFontPx" value="42" />
+            <label for="txtFontPx">px</label>
+            <select id="ddlFont">
+                <option>Arial</option>
+                <option>Calibri</option>
+                <option>Courier</option>
+                <option>Garamond</option>
+                <option>Georgia</option>
+                <option>Helvetica</option>
+                <option>Lucinda Grande</option>
+                <option>Tahoma</option>
+                <option>Times New Roman</option>
+                <option>Verdana</option>
+            </select>           
+        </div>
+        <div>
+             <label for="chkBold">Bold</label> <input type="checkbox" id="chkBold" />
+             <label for="chkDropShadow">Drop Shadow</label> <input type="checkbox" id="chkDropShadow" checked="checked" />
+        </div>
+        <div>
+            <span>Font Color</span> <input type="text" class="color" id="txtFontColor" value="000000" />
+        </div>
+        <div>
+            <span>Border Color</span> <input type="text" class="color" id="txtBorder" value="AAB368" />
+        </div>
+        <div>
+            <span>Background Color</span> <input type="text" class="color" id="txtBg" value="FFFFFF" />
+        </div>
+        <div>
+            <span>Arrow Color</span> <input type="text" class="color" id="txtArrow" value="0000FF" />
+        </div>
+    </div>
+    <div id="divResult">
+        <h2>Step #2</h2>
+        <p>
+        Right Click / Ctrl+Click on the image below and save it.<span class="super"><a href="#pSafari">1</a></span>
+        </p>
+        <img id="img" src="result" alt="Enchanced Message" />
+    </div>
+    <div id="divStep3" class="clearFloat">
+        <h2>Step #3</h2>
+        <p>
+        Share your image and the powerful message it contains on your favorite social network.
+        </p>
+    </div>
+    <div id="divFooter">
+        <p id="pSafari">
+        1. Safari users may have to add the .png extension to their image while saving.
+        </p>
+        <p>
+        A special thanks to Jan Odvárko who created <a href="http://jscolor.com/">JSColor</a>.
+        </p>
+    </div>
+</div>
+<div id="divBroken">
+    <h1>Sorry, this page doesn't work in your browser.</h1>
+    <p>
+    This page uses one or more technologies that are not supported by your browser.
+    If this bothers you, you might want to try the latest version of Firefox, Chrome,
+    Safari, or Opera.
+    </p>    
+    <p>
+    If you are running the latest version of Firefox, Chrome, Safari, or Opera and
+    this page still doesn't work, please accept my apologies. I must have missed
+    something.
+    </p>
+</div>
+</body>
+</html>

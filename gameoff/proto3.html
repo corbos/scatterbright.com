@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<head>
+<title>Game Off</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<style>
+body{
+	margin:0;
+    padding:5px;
+    border:0;
+    font-family:georgia,verdana,sans-serif;
+    font-size:14px;
+    background-color:#CCCCCC;
+}
+#thecanvas{
+     background-color:#ffffff;
+     width:640px;
+     height:480px;
+}
+</style>
+<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+
+var Scroller = (function(){
+
+    window.requestAnimFrame = (function(){
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(callback) {
+              window.setTimeout(callback, 1000 / 60);
+            };
+        }
+    )();
+
+    var THRUST = 7;
+    var JUMP_DURATION = 20;
+    var TERMINAL_VELOCITY = -8;
+    var GRAVITY = 0.5;
+    var CANVAS_W = 640;
+    var CANVAS_H = 480;
+    var SCROLL_SPEED = 2;
+    
+    var xOffset = 0;
+    var yOffset = 0;
+
+    var Hero = function(){
+        this.x = 50;
+        this.y = CANVAS_H - 75;        
+        this.width = 50;
+        this.height = 50;
+        this.velocity = 0;
+        this.jumping = false;
+        this.falling = false;
+        this.jumpDuration = 0;
+        this.buttonDown = false;
+        this.dead = false;
+    };
+
+    Hero.prototype = {
+        tick:function(floor){
+            this.y = this.y - this.velocity;
+            this.x += SCROLL_SPEED;
+            this.falling = this.y + this.height < floor;
+            if(this.y + this.height > floor && !this.dead){ 
+                this.jumping = false;
+                this.y = floor - this.height;
+                this.velocity = 0;
+            }
+            if(this.jumpDuration > 0)
+                this.jumpDuration--;
+            else
+                this.velocity = Math.max(this.velocity - GRAVITY, TERMINAL_VELOCITY);
+        },
+        draw:function(ctx){
+            ctx.save();
+            ctx.fillStyle = '#FF0000';
+            ctx.beginPath();
+            ctx.arc(this.x + 25 - xOffset, this.y + 25 - yOffset, 25, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        },
+        jump:function(){
+            if(!this.jumping && !this.falling && !this.buttonDown){
+                this.jumping = true;
+                this.velocity = THRUST;
+                this.jumpDuration = JUMP_DURATION;
+            }
+            this.buttonDown = true;
+        },
+        stopJump:function(){
+            this.jumpDuration = 0;
+            this.buttonDown = false;
+        },
+        kill:function(){
+            this.dead = true;
+            this.jumpDuration = 0;
+        },
+        reset:function(y){
+            this.x = 50;
+            this.y = y - this.height;
+            this.dead = false;
+            this.velocity = 0;
+            this.jumping = false;
+            this.falling = false;
+        }
+    };
+    
+    var Ground = function(x,y,width,height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    };
+    
+    Ground.prototype = {       
+        draw:function(ctx){
+            ctx.save();
+            ctx.fillStyle = '#855723';
+            ctx.fillRect(this.x - xOffset,this.y - yOffset,this.width,this.height);
+            ctx.restore();
+        }
+    };
+    
+    var Enemy = function(x,y,maxLeft,maxRight){
+        this.x = x;
+        this.y = y;
+        this.width = 50;
+        this.height = 50;
+        this.offset = 0;
+        this.offsetIncrement = 1;
+        this.maxLeft = maxLeft;
+        this.maxRight = maxRight;
+    };
+    Enemy.prototype = {
+        tick:function(){
+            if(this.offset >= this.maxRight || this.offset <= this.maxLeft)
+                this.offsetIncrement = -this.offsetIncrement;
+            this.offset += this.offsetIncrement;
+            this.x = this.x + this.offsetIncrement;           
+        },
+        draw:function(ctx){
+            ctx.save();
+            ctx.fillStyle = '#9900CC';
+            ctx.fillRect(this.x - xOffset,this.y - yOffset,this.width,this.height);
+            ctx.restore();
+        }
+    };
+
+    var Game = function(canvas){
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.running = false;
+        this.frame = 0;
+        this.hero = new Hero();
+        this.ground = [];
+        this.enemies = [];
+        for(var i = 0; i < 100; i++){
+            var y = Math.random() < 0.5 ? 150 : 300;
+            this.ground.push(new Ground(i * 150, y, 150, 25));
+            if(i == 0)
+                this.hero.y = y - this.hero.height;
+            if(i%4 == 3)
+                this.enemies.push(new Enemy(i * 150 + 100, y - 50, -100, 0));
+        }
+    };
+
+    Game.prototype = {
+        start:function(){
+            this.running = true;
+            this.tick();
+        },
+        stop:function(){
+            this.running = false;
+        },
+        tick: function(){
+            var self = this;
+            if(this.running)
+                requestAnimFrame(function(){ self.tick(); });
+                
+            var hero = this.hero;
+            var floor = CANVAS_H + 100;
+            
+            xOffset += SCROLL_SPEED;
+              
+            var length = this.ground.length;
+            for(var i = 0; i< length;i++){
+                var block = this.ground[i];               
+                if(hero.velocity <= 0 
+                    && block.x < hero.x + hero.width 
+                    && block.x + block.width > hero.x
+                    && block.y > hero.y + hero.height - 1){
+                    floor = Math.min(block.y,floor);
+                }
+            }
+            
+            length = this.enemies.length;
+            for(var i = 0; i< length;i++){
+                var enemy = this.enemies[i];
+                enemy.tick();
+                if(hero.velocity <= 0 
+                    && enemy.x < hero.x + hero.width 
+                    && enemy.x + enemy.width > hero.x
+                    && Math.abs(enemy.y - (hero.y + hero.height)) < 4){
+                    hero.velocity = -hero.velocity;
+                }
+                else if(enemy.x <= hero.x + hero.width 
+                    && enemy.x + enemy.width >= hero.x
+                    && enemy.y <= hero.y + hero.height
+                    && enemy.y + enemy.height >= hero.y){
+                    hero.kill();
+                }                    
+            }
+                
+            this.hero.tick(floor); 
+
+            if(this.hero.y > CANVAS_H){
+                this.stop();
+                xOffset = 0;
+                yOffset = 0;
+                this.hero.reset(this.ground[0].y);               
+            }            
+           
+            this.frame++;
+            this.draw();
+            
+            
+        },
+        draw:function(){
+            var ctx = this.ctx;
+
+            ctx.clearRect(0,0,this.canvas.width,this.canvas.height);           
+            ctx.strokeText('Frame: ' + this.frame, 5, 15);           
+            
+            var length = this.ground.length;
+            for(var i = 0; i< length;i++)
+                this.ground[i].draw(ctx);
+                
+            length = this.enemies.length;
+            for(var i = 0; i< length;i++)
+                this.enemies[i].draw(ctx);
+                
+            this.hero.draw(ctx);
+        },
+        jump:function(){
+            this.hero.jump();
+        },
+        stopJump:function(){
+            this.hero.stopJump();
+        }
+    };
+
+    return { Game: Game };
+})();
+
+$(document).ready(function(){
+    var game = new Scroller.Game(document.getElementById('thecanvas'));
+    game.draw();
+    $(document).keydown(function(event){
+        if(event.which == 32){
+            if(game.running)
+                game.jump();
+            else
+                game.start();
+        }
+        if(event.which == 27){
+            if(game.running)
+                game.stop();
+            else
+                game.start();
+        }
+    });
+    $(document).keyup(function(event){
+        if(event.which == 32)
+            game.stopJump();
+    });
+});
+</script>
+</head>
+<body>
+<canvas id="thecanvas" width="640" height="480">
+Your browser does not support the canvas element. Sorry.
+</canvas>
+<div>
+    [Esc] to start/stop   
+</div>
+<div>
+    [Space] to start/jump
+</div>
+</body>

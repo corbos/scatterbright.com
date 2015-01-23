@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<head>
+<title>Game Off</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<style>
+body{
+	margin:0;
+    padding:5px;
+    border:0;
+    font-family:georgia,verdana,sans-serif;
+    font-size:14px;
+    background-color:#CCCCCC;
+}
+#thecanvas{
+     background-color:#ffffff;
+}
+.number{
+    width:50px;
+}
+</style>
+<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+var Scroller = (function(){
+
+    var TIME_SLICE = 10;
+    var THRUST = 0;
+    var TERMINAL_VELOCITY = 0;
+
+    var Model = function(ctx){
+        this.ctx = ctx;
+        this.x = 150;
+        this.y = 350;
+        this.radius = 25;
+        this.thrust = 0;
+        this.gravity = 0;
+        this.jumping = false;
+        this.mousedown = false;
+        this.color = 'rgb(255,0,0)';
+    };
+
+    Model.prototype = {
+        tick:function(floor){           
+            this.y = this.y - this.thrust;
+            if(this.y > floor){
+                this.jumping = false;
+                this.color = 'rgb(255,0,0)';
+                this.y = floor;
+                this.thrust = 0;
+            }
+            if(this.jumping && this.mousedown)
+                this.thrust = Math.max(this.thrust - (this.gravity / 2.0), TERMINAL_VELOCITY);
+            else
+                this.thrust = Math.max(this.thrust - this.gravity, TERMINAL_VELOCITY);            
+        },
+        draw:function(){
+            var ctx = this.ctx;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+        },
+        jump:function(){
+            if(!this.jumping){
+                this.jumping = true;
+                this.thrust = THRUST;
+                this.mousedown = true;
+                this.color = 'rgb(0,155,0)';
+            }
+        }
+    };
+    
+    var Block = function(ctx){
+        this.x = 600;
+        this.y = 325;
+        this.width = 150;
+        this.height = 50;
+        this.color = 'rgb(0,0,0)';
+        this.ctx = ctx;
+        this.velocity = 2.0;
+        this.acceleration = 0.2;
+    };
+    
+    Block.prototype = {
+        tick: function(){
+            this.velocity = Math.min(this.velocity + this.acceleration, 1.5);
+            this.x -= this.velocity;
+            if(this.x < -this.width)
+                this.x = 601.5
+        },
+        draw: function(){
+            this.ctx.fillStyle = this.color;            
+            this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        }
+    };
+
+    var controller = function(canvas){
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.timeout = 0;
+        this.model = new Model(this.ctx);
+        this.block = new Block(this.ctx);
+        this.frame = 0;
+    };
+
+    controller.prototype = {
+        toggle: function(){
+            if(this.timeout > 0){
+                clearTimeout(this.timeout);
+                this.timeout = 0;
+                $(this.canvas).off('mousedown mouseup');
+            }
+            else{
+                this.load();
+                this.frame = 0;
+                var self = this;
+                this.timeout = setTimeout(function(){ self.tick(); }, TIME_SLICE);
+                $(this.canvas).on('mousedown', function(){
+                    self.model.jump();
+                });
+                $(this.canvas).on('mouseup', function(){
+                    self.model.mousedown = false;
+                });
+            }
+        },
+        tick: function(){
+            var self = this;
+            this.timeout = setTimeout(function(){ self.tick(); }, TIME_SLICE);
+            
+            //ran into the block
+            if(this.model.y > 300 && Math.abs(this.model.x - this.block.x) < 25){
+                this.block.velocity = -2.5;
+            }
+            
+            var floor = 350;
+            if(this.block.x - this.model.x < 20 && this.model.x - (this.block.x + this.block.width) < 10){
+                floor = this.block.y - 25;
+            }
+                          
+            
+            this.model.tick(floor);
+            this.block.tick();
+            
+            this.draw();
+            this.frame++;
+        },
+        draw:function(){
+            var ctx = this.ctx;
+
+            ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+
+            ctx.fillStyle = 'rgb(0,0,0)';
+            ctx.fillText('Frame: ' + this.frame, 5, 15);
+            ctx.fillRect(0,375,this.canvas.width,25);
+           
+            this.model.draw();          
+            this.block.draw();
+        },
+        load: function(){
+            this.model.gravity = parseFloat($('#txtGravity').val());
+            THRUST = parseFloat($('#txtThrust').val());
+            TERMINAL_VELOCITY = parseFloat($('#txtTerminal').val());
+        }        
+    };
+
+    return { Controller: controller };
+})();
+
+$(document).ready(function(){
+    var controller = new Scroller.Controller(document.getElementById('thecanvas'));
+    controller.draw();
+    $('#toggle').click(function(){
+        if($(this).val() == 'Start')
+            $(this).val('Stop');
+        else
+            $(this).val('Start');
+        controller.toggle();
+    });
+});
+</script>
+</head>
+<body>
+<canvas id="thecanvas" width="600" height="400">
+Your browser does not support the canvas element. Sorry.
+</canvas>
+<div>
+    <label for="txtGravity">Gravity:</label> <input type="text" id="txtGravity" class="number" value="0.33" />
+    <label for="txtThrust">Thrust:</label> <input type="text" id="txtThrust" class="number" value="8" />
+    <label for="txtTerminal">Terminal Velocity:</label> <input type="text" id="txtTerminal" class="number" value="-8" />
+</div>
+<div>
+    <input type="button" id="toggle" value="Start" />
+</div>
+</body>
