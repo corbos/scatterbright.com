@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>The Travelling Salesman Problem - WillyLoman</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="description" content="The Travelling Salesman Problem" />
+<link rel="stylesheet" href="scatterbright.css" type="text/css" />
+<style>
+#thecanvas {
+    background-color:#FFF;
+}
+#divAlgo {
+    width:800px;
+    clear:both;
+}
+#spnPoint {
+    float:right;
+}
+#divTSP {
+    padding-left: 25px;
+}
+</style>
+</head>
+<body>
+<div id="divHeader">
+    <a href="index.html">Scatterbright</a>
+</div>
+<div id="divTSP">
+    <h1>Solving a Travelling Salesman Problem with WillyLoman</h1> 
+    <p>
+    <ul>
+        <li>
+        More about the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem at Wikipedia</a>
+        </li>
+        <li>
+        More about <a href="https://github.com/corbos/WillyLoman">WillyLoman at Github</a>
+        </li>
+    </ul>
+    </p>
+    <p>
+    Click on the canvas to add cities.
+    </p>
+    <p>
+    ...or add
+    <input type="text" id="txtAddCount" value="35"> random points.
+    <button type="button" id="btnAddRandom">Add</button>
+    </p>
+    <canvas id="thecanvas" width="800" height="500">
+        Your browser does not support the canvas element. Sorry.
+    </canvas>
+    <div id="divAlgo">
+        <select id="ddlAlgo"></select>
+        <button type="button" id="btnGo">Solve</button>
+        <button type="button" id="btnStop">Stop</button>
+        <button type="button" id="btnClear">Clear</button>
+        <span id="spnPoint">
+            Cities
+            <span id="spnPointCount">0</span>
+        </span>
+    </div>
+    <p>
+    Distance: <span id="spnDistance"></span><br>
+    Iteration: <span id="spnIteration"></span><br>
+    Improvements: <span id="spnImprovement"></span>
+    </p>
+    <div id="explanation">
+        For the politically curious, the Travelling Sales<em>man</em> Problem is no more about men than, say, breakfast cereal
+        or socks or air travel.
+    </div> 
+</div>
+<script type="text/javascript" src="tsp/WillyLoman.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.inorder.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.onerandom.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.iteraterandom.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.bestnearestneighbor.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.bruteforce.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.branchnbound.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.dynamic.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.ga.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.gamutation.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.gacrossover.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.twooptfirst.js"></script>
+<script type="text/javascript" src="tsp/corbos.tsp.twooptbest.js"></script>
+<script type="text/javascript" src="tsp/WillyLoman.UI.js"></script>
+<script type="text/javascript">
+(function() {
+    var byId = function(id) { return document.getElementById(id); };
+
+    var thecanvas = byId('thecanvas'),
+        spnDistance = byId('spnDistance'),
+        spnIteration = byId('spnIteration'),
+        spnImprovement = byId('spnImprovement'),
+        spnPointCount = byId('spnPointCount'),
+        ddlAlgo = byId('ddlAlgo');
+
+    var notify = function(data) {
+        spnDistance.innerHTML = data.distance;
+        spnIteration.innerHTML = data.iteration;
+        spnImprovement.innerHTML = data.improvements;
+    };
+
+    var ui = new WillyLoman.UI(thecanvas, notify);
+    for(var key in WillyLoman.algorithms) {
+        ddlAlgo.appendChild(new Option(WillyLoman.algorithms[key].name, key));
+    }
+    byId('btnAddRandom').addEventListener('click', function() {
+        ui.addRandom(byId('txtAddCount').value);
+        spnPointCount.innerHTML = ui.solver.points.length;
+    });
+    byId('btnClear').addEventListener('click', function() {
+        ui.clear();
+    });
+    byId('btnGo').addEventListener('click', function() {
+        ui.solve(ddlAlgo.value);
+    });
+    byId('btnStop').addEventListener('click', function() {
+        ui.stop();
+    });
+    thecanvas.addEventListener('mousedown', function() {
+        setTimeout(function () { spnPointCount.innerHTML = ui.solver.points.length; }, 0);
+    });
+})();
+</script>
+</body>
+</html>
+

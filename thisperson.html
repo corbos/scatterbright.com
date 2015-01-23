@@ -8,7 +8,7 @@
 <link rel="image_src" type="image/jpeg" href="image_src.jpg" />
 <link rel="stylesheet" href="scatterbright.css" type="text/css" />
 <style>
-#thecanvas{   
+#thecanvas{
     display:none;
     width:400px;
     height:400px;
@@ -19,11 +19,11 @@
 #divInput{
     width:400px;
     float:left;
-    margin-right:15px;   
+    margin-right:15px;
 }
 #divResult{
     width:425px;
-    float:right;   
+    float:right;
 }
 #divExample{
     padding-left:25px;
@@ -44,7 +44,7 @@
     vertical-align:super;
 }
 </style>
-<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="jscolor/jscolor.js"></script>
 <script type="text/javascript">
 function drawArrow(ctx){
@@ -64,43 +64,43 @@ function drawText(ctx){
     ctx.fillStyle = '#' + document.getElementById('txtFontColor').value;
     var fontPx = 32;
     var fontPxInt = parseInt(document.getElementById('txtFontPx').value);
-    if(!isNaN(fontPxInt)) { 
+    if(!isNaN(fontPxInt)) {
         fontPx = fontPxInt;
     }
     var font = document.getElementById('ddlFont').value;
     if(font.indexOf(' ') >= 0)
-        font = '"' + font + '"';      
-  
-    ctx.font = ($('#chkBold').is(':checked') ? '700' : '400') + ' ' + fontPx.toString() + 'px ' + font;   
+        font = '"' + font + '"';
+
+    ctx.font = ($('#chkBold').is(':checked') ? '700' : '400') + ' ' + fontPx.toString() + 'px ' + font;
     ctx.fillText('This Person', 115, 115);
     var lines = txt.replace('\r\n', '\n').replace('\r','\n').split('\n');
     fontPx += 4;
     for(var i = 0; i < lines.length; i++){
         ctx.fillText(lines[i], 20, 115 + fontPx * (i + 1));
-    } 
+    }
 }
 function withDropShadow(ctx,func){
     ctx.save();
     ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;  
-    ctx.shadowBlur = 5; 
-    ctx.shadowColor = '#888888'; 
+    ctx.shadowOffsetY = 3;
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = '#888888';
     func(ctx);
     ctx.restore();
 }
 function draw(){
-    
-    var canvas = document.getElementById('thecanvas');    
-    var ctx = canvas.getContext('2d');  
-    
-    ctx.clearRect(0,0,canvas.width, canvas.height);  
-    
+
+    var canvas = document.getElementById('thecanvas');
+    var ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
     ctx.fillStyle = '#' + document.getElementById('txtBorder').value;
     ctx.fillRect(0,0,canvas.width,canvas.height);
-    
+
     ctx.fillStyle = '#' + document.getElementById('txtBg').value;
     ctx.fillRect(10,10,canvas.width - 20, canvas.height - 20);
-    
+
     if($('#chkDropShadow').is(':checked')){
         withDropShadow(ctx,drawArrow);
         withDropShadow(ctx,drawText);
@@ -109,20 +109,20 @@ function draw(){
         drawArrow(ctx);
         drawText(ctx);
     }
-    
+
     document.getElementById('img').src = canvas.toDataURL("image/png");
 }
 
 $(document).ready(function(){
     var canvas = document.getElementById('thecanvas');
-    if(canvas.getContext && canvas.toDataURL){            
-        $('#txt,#txtFontPx').keyup(function(){       
+    if(canvas.getContext && canvas.toDataURL){
+        $('#txt,#txtFontPx').keyup(function(){
             draw();
         });
-        $('#txtFontColor,#txtBg,#txtBorder,#txtArrow,#ddlFont,#chkBold,#chkDropShadow').change(function(){       
+        $('#txtFontColor,#txtBg,#txtBorder,#txtArrow,#ddlFont,#chkBold,#chkDropShadow').change(function(){
             draw();
-        }); 
-        draw();         
+        });
+        draw();
     }
     else{
         $('#divContent').hide();
@@ -133,18 +133,15 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="divHeader">
-    <a href="index.html">
-        <img src="home.png" alt="Scatterbright Home" title="Home" />        
-    </a>
     <a href="index.html">Scatterbright</a>
 </div>
-<div id="divContent">   
+<div id="divContent">
     <canvas id="thecanvas" width="400" height="400">
     Your browser does not support the canvas element. Sorry.
     </canvas>
-    <h1>Create a "This Person" message for Facebook or Google+ in three easy steps!</h1>   
+    <h1>Create a "This Person" message for Facebook or Google+ in three easy steps!</h1>
     <p>
-    Do you have an important cause, meme, or insight to share with your social network?    
+    Do you have an important cause, meme, or insight to share with your social network?
     Which of these messages is more effective?
     </p>
     <div id="divExample">
@@ -155,7 +152,7 @@ $(document).ready(function(){
     make a "This Person" message today!
     </p>
     <div id="divInput">
-       
+
         <h2>Step #1</h2>
         <p>
         Craft a pithy message, choose a high-impact font, and create
@@ -164,10 +161,10 @@ $(document).ready(function(){
         <div>
             <textarea id="txt" cols="35" rows="10">
     loves coleslaw
-        
+
         ...but hates
-        cabbage!   
-            </textarea>   
+        cabbage!
+            </textarea>
         </div>
         <div>
             <span>Font</span>
@@ -184,7 +181,7 @@ $(document).ready(function(){
                 <option>Tahoma</option>
                 <option>Times New Roman</option>
                 <option>Verdana</option>
-            </select>           
+            </select>
         </div>
         <div>
              <label for="chkBold">Bold</label> <input type="checkbox" id="chkBold" />
@@ -231,7 +228,7 @@ $(document).ready(function(){
     This page uses one or more technologies that are not supported by your browser.
     If this bothers you, you might want to try the latest version of Firefox, Chrome,
     Safari, or Opera.
-    </p>    
+    </p>
     <p>
     If you are running the latest version of Firefox, Chrome, Safari, or Opera and
     this page still doesn't work, please accept my apologies. I must have missed

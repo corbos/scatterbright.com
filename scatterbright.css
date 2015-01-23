@@ -1,53 +1,70 @@
-body{
+body {
     margin:0;
-    padding:0;   
+    padding:0;
     font-family:georgia,verdana,sans-serif;
-    font-size:18px;    
+    font-size:18px;
     background-color:#F5F5D4;
-    text-align:center;    
 }
-h1{
+h1 {
     font-size:1.5em;
 }
-h2{
+h2 {
     font-size:1.25em;
     border-bottom:2px solid #B81F02;
 }
-table,tr,td{
+table, tr, td {
     border:0;
 }
-img{
+img {
     border:0;
 }
-a{    
+a {
     color:#1A4F00;
 }
-a:hover{
+a:hover {
     color:#A2C294;
     text-decoration:none;
 }
-#divHeader{    
+#divHeader {
     background-color:#B82002;
     border-bottom:2px solid #000;
-    text-align:left;
-    padding:2px 0px 1px 10px;
+    font-size: 24px;
+    padding: 8px 0px 8px 10px;
 }
-#divHeader img{
-    vertical-align:text-bottom;
-}
-#divHeader a{
+#divHeader a {
     color:#FFF;
     text-decoration:none;
-    vertical-align:0%;
 }
-#divContent{
+#divContent {
     margin:0px auto;
     width:900px;
     text-align:left;
 }
-#divFooter{
+#divFooter {
     margin-top:75px;
     font-size:10px;
     text-align:center;
     clear:both;
+}
+.flow {
+    float:left;
+    padding:10px;
+    width:425px;
+}
+.noodle {
+    padding-bottom: 10px;
+}
+.noodle img {
+    vertical-align: middle; 
+}
+.noodle span {
+    display: inline-block;
+    width: 300px;
+    margin-left: 5px;
+}
+.noodle > a {
+    display: inline-block;
+    width: 110px;
+    text-decoration: none;
+    border: 1px solid #000;
 }
