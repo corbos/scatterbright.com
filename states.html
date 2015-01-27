@@ -5,68 +5,68 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <meta name="title" content="US States and their Capitals" />
 <meta name="description" content="Test yourself on US states and capitals.
-    A little rusty? We have multiple choice. Very confident? Then fill in the blank. It's fun and easy!" />
-<link rel="image_src" type="image/jpeg" href="st_src.jpg" />
+A little rusty? We have multiple choice. Very confident? Then fill in the blank. It's fun and easy!" />
+<link rel="image_src" type="image/jpeg" href="img/st_src.jpg" />
 <link rel="stylesheet" href="scatterbright.css" type="text/css" />
 <style>
-label{
+label {
     width:100px;
     float:left;
 }
-td{
-    padding:10px;
-}
-.ddl{
+.ddl {
     display:none;
 }
-.frmHeader{
+.frmHeader {
     border-bottom:2px solid #B81F02;
     margin-bottom:10px;
 }
-#divContent{
-    text-align:center;
+.small-font {
+    font-size: 10px;
 }
-#divDifficulty{
-    width:80%;
-    margin:auto;
-    text-align:left;
+.col-head {
+    height: 100px;
 }
-#map{
-    width:900;
-    height:600;
+.img-outline {
     border:1px solid #000;
 }
-#mapControls{
+#map {
+    width:900px;
+    height:600px;
+    border:1px solid #000;
+}
+#mapControls {
     text-align:right;
     padding:5px;
 }
-#answer{
+#answer {
     padding:10px;
     position:absolute;
     border:1px solid #000;
     border-radius:20px;
     background-color:#FEFFF7;
     text-align:left;
+    display: none
 }
-#answer .frm{
+#answer .frm {
     padding-bottom:10px;
 }
-#answer .frmLast{
+#answer .frmLast {
     text-align:right;
 }
-#warning{
+#warning {
+    width: 100%;
     display:none;
 }
 </style>
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="raphael-min.js"></script>
-<script type="text/javascript" src="states.js"></script>
+<script type="text/javascript" src="script/jquery.min.js"></script>
+<script type="text/javascript" src="script/raphael-min.js"></script>
+<script type="text/javascript" src="script/states.js"></script>
 </head>
 <body>
 <div id="divHeader">
     <a href="index.html">Scatterbright</a>
 </div>
-<div id="divContent">
+<div class="content">
     <h1>US States and their Capitals</h1>
     <div id="instructions">
         <p>
@@ -75,46 +75,40 @@ td{
         <h2>Choose your level of difficulty</h2>
         <div id="divDifficulty">
             <p>
-                <input type="button" id="btnEasy" value="Level 1" /> - Choose states and capitals from a list of five options.
+            <button type="button" id="btnEasy">Level 1</button> - Choose states and capitals from a list of five options.
             </p>
             <p>
-                <input type="button" id="btnMedium" value="Level 2" /> - Choose states and capitals from a list of all possible states and capitals.
+            <button type="button" id="btnMedium">Level 2</button> - Choose states and capitals from a list of all possible states and capitals.
             </p>
             <p>
-                <input type="button" id="btnHard" value="Level 3" /> - Enter states and capitals from memory without multiple choice. Spelling is important!
+            <button type="button" id="btnHard">Level 3</button> - Enter states and capitals from memory without multiple choice. Spelling is important!
             </p>
         </div>
     </div>
     <div id="warning">
-        <table>
-            <tr>
-                <td>Heads up! The states circled below have been moved and resized so we can show more state and less empty space
-                on your test map. This is not where they are located.
-                </td>
-                <td>
-                Their actual locations in relation to the other 48 states are circled below. Don't be fooled on other maps.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <img src="testmap_small.jpg" alt="Test Map" />
-                </td>
-                <td>
-                <img src="refmap_small.jpg" alt="Reference Map" style="border:1px solid #000;" />
-                <p style="font-size:10px;">
-                Map courtesy of the University of Texas Libraries, The University of Texas at Austin. Visit the <a href="http://lib.utexas.edu/maps/united_states.html">Perry-Castañeda Library Map Collection</a>.
-                </p>
-                </td>
-            </tr>
-        </table>
-        <p style="font-size: 1.5em;    text-decoration:underline;">
-        Press any key to begin.
-        </p>
+        <div class="flow">
+            <p class="col-head">Heads up! The states circled below have been moved and resized so we can show more state and less empty space
+            on your test map. This is not where they are located.
+            </p>
+            <img src="img/testmap_small.jpg" alt="Test Map" />
+        </div>
+        <div class="flow">
+            <p class="col-head">
+            Their actual locations in relation to the other 48 states are circled below. Don't be fooled on other maps.
+            </p>
+            <img src="img/refmap_small.jpg" alt="Reference Map" class="img-outline" />
+            <p class="small-font">
+            Map courtesy of the University of Texas Libraries, The University of Texas at Austin. 
+            Visit the <a href="http://lib.utexas.edu/maps/united_states.html">Perry-Castañeda Library Map Collection</a>.
+            </p>
+        </div>       
+       
+        <h3 class="clear">Press any key to begin.</h3>
     </div>
     <div id="divMap">
         <div id="map"></div>
         <div id="mapControls">
-             <input type="button" id="btnReset" value="Start Over" />
+            <input type="button" id="btnReset" value="Start Over" />
         </div>
     </div>
 </div>
@@ -123,30 +117,28 @@ td{
     A special thanks to Dmitry Baranovskiy for his amazing SVG/VML library, <a href="http://raphaeljs.com/">Raphaël</a>.
     </p>
     <p>
-    The test map was built using SVG paths from <a href="https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg">https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg</a>.
+    The test map was built using SVG paths from <a href="https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg">
+        https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg</a>.
     <br />Please note licensing restrictions if you intend to copy or adapt the map.
     </p>
 </div>
 <div id="answer">
-   <form>
-    <div class="frmHeader">
-        Which state is this and what is its capital?
-    </div>
-    <div class="frm">
-        <label for="txtState" class="txt">State</label> <input type="text" id="txtState" autocomplete="off" class="txt" />
-        <label for="ddlState" class="ddl">State</label> <select id="ddlState" class="ddl"></select>
-    </div>
-    <div class="frm">
-        <label for="txtCapital" class="txt">Capital</label> <input type="text" id="txtCapital" autocomplete="off" class="txt" />
-        <label for="ddlCapital" class="ddl">Capital</label> <select id="ddlCapital" class="ddl"></select>
-    </div>
-    <div class="frmLast">
-        <input type="submit" id="btnSubmit" value="Submit" />
-    </div>
-  </form>
+    <form>
+        <div class="frmHeader">
+            Which state is this and what is its capital?
+        </div>
+        <div class="frm">
+            <label for="txtState" class="txt">State</label> <input type="text" id="txtState" autocomplete="off" class="txt" />
+            <label for="ddlState" class="ddl">State</label> <select id="ddlState" class="ddl"></select>
+        </div>
+        <div class="frm">
+            <label for="txtCapital" class="txt">Capital</label> <input type="text" id="txtCapital" autocomplete="off" class="txt" />
+            <label for="ddlCapital" class="ddl">Capital</label> <select id="ddlCapital" class="ddl"></select>
+        </div>
+        <div class="frmLast">
+            <input type="submit" id="btnSubmit" value="Submit" />
+        </div>
+    </form>
 </div>
-<script type="text/javascript">
-$('#answer').hide();
-</script>
 </body>
 </html>
