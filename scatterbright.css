@@ -76,3 +76,6 @@ button {
     text-decoration: none;
     border: 1px solid #000;
 }
+.elsewhere > li {
+    line-height: 1.5;
+}
