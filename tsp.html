@@ -47,7 +47,9 @@
 </head>
 <body>
 <div id="divHeader">
-    <a href="index.html">Scatterbright</a>
+    <div class="content">
+        <a href="index.html">Scatterbright</a>
+    </div>
 </div>
 <div class="content">
     <h1>Solving a Travelling Salesman Problem with WillyLoman</h1>
@@ -105,12 +107,12 @@
                     This is a good baseline to test against other algorithms.
                 </div>
                 <div id="divBruteForce">
-                    This algorithm tries every single possibility to determine the shortest solution. As such, it's very slow. For
+                    This algorithm tries every single possibility to determine the shortest route. As such, it's very slow. For
                     tours larger than a dozen cities, you'll be waiting for a long time. Much larger than that and you'll be waiting
                     forever.
                 </div>
                 <div id="divBranchNBound">
-                    Similar to a brute force algorithm except it tries to determine when a given solution is hopeless.
+                    Similar to a brute force algorithm except it tries to determine when a partial solution is hopeless.
                     If the best it can hope for is worse than its current best, it tries something else.
                 </div>
                 <div id="divDynamic">
@@ -120,9 +122,10 @@
                     and more as the tours grow.
                 </div>
                 <div id="divGA">
-                    A <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Genetic algorithm.</a> Imagine each possible solution is a gene. 
-                    Create a bunch,  determine which are best, breed them, and repeat forever. "Breeding" an algorithm means a chance of mutation 
-                    (cities jump to a new location) or crossing two solutions (taking a subtour from one and merge it with another) or both.
+                    Imagine that a solution is a gene. Create a bunch, determine which are best, breed them, and repeat forever. 
+                    "Breeding" a solution means a chance of mutation (cities jump to a new location) 
+                    or crossing two solutions (taking a subtour from one and merge it with another) or both.
+                    <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">More here.</a>
                 </div>
                 <div id="divGAMutation">
                     Just the mutation process of a genetic algorithm.
@@ -132,7 +135,7 @@
                 </div>
                 <div id="divTwoOptFirst">
                     A 2-opt algorithm picks two edges (in the graph world) and determines if swapping their endpoints will improve the solution.
-                    If it does, it may keep it. This version keeps the first improvement and starts again.
+                    If it does, it keeps it. This version keeps the first improvement and starts again.
                 </div>
                 <div id="divTwoOptBest">
                     Another 2-opt algorithm. This one tries all possible swaps and keeps the best.

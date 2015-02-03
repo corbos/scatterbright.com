@@ -38,7 +38,9 @@ var sudokuUI = new Sudoku.UI('grr', log);
 </head>
 <body>
 <div id="divHeader">
-    <a href="index.html">Scatterbright</a>
+    <div class="content">
+        <a href="index.html">Scatterbright</a>
+    </div>
 </div>
 <div class="content">
     <h1>sudoku!</h1>
@@ -49,7 +51,7 @@ var sudokuUI = new Sudoku.UI('grr', log);
     </p>
     <p>
     I decided to build a sudoku solver after reading Peter Norvig's <a href="http://norvig.com/sudoku.html">Solving Every Sudoku Puzzle</a>.
-    There's more about my solver on Bitbucket: <a href="https://bitbucket.org/corbos/sudoku/src">https://bitbucket.org/corbos/sudoku/src</a>.
+    There's more about my solver on Bitbucket: <a href="https://bitbucket.org/corbos/sudoku">https://bitbucket.org/corbos/sudoku</a>.
     </p>
     <div class="flow">
         <h2>Play</h2>
@@ -59,14 +61,14 @@ var sudokuUI = new Sudoku.UI('grr', log);
             <li>Click the "Solve" button.</li>
             <li>Savor your solution.</li>
         </ol>
-        <p>There are a few disappointing limitations:<p>
+        <h2>Disappointments</h2>
         <ol>
             <li>The solver just solves the stupid puzzle. It doesn't share anything about its process. That is, you don't learn anything.
             It's <span class="strike">kind of</span> cheating.</li>
-            <li>If your puzzle is unsolvable, the solver won't tell you why. It just warns you that it's unsolvable.</li>
-            <li>The solver stops after the first solution if there's more than one. It's lazy like that.</li>
+            <li>If your puzzle is unsolvable, the solver won't tell you why. It just complains.</li>
+            <li>If there's more than one solution, the solver stops after the first. It's lazy like that.</li>
             <li>The solver employs some very unattractive JavaScript. That isn't disappointing to everyone, but it's bound to
-            bother someone. </li>
+            bother someone.</li>
         </ol>
     </div>
     <div class="flow puzzle">
