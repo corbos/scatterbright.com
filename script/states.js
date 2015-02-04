@@ -1,19 +1,19 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-    var answerPanel = $('#answer');
-    var R = Raphael('map',900,600);
-    var map = $('#map');
-    var inputState = null;
-    var inputCapital = null;
-    var currentData = null;
-    var currentState = null;
-    var arrow = null;
-    var prepAnswer = null;
-    var states = {};
-    var indexes = [];
-    var shapes = [];
+    var answerPanel = $('#answer'),
+        R = Raphael('map',900,600),
+        map = $('#map'),
+        inputState,
+        inputCapital,
+        currentData,
+        currentState,
+        arrow ,
+        prepAnswer,
+        states = {},
+        indexes = [],
+        shapes = [];
 
-    function State(name,capital,cx,cy,offsetx,offsety,linePath,borderPath){
+    function State(name, capital, cx, cy, offsetx, offsety, linePath, borderPath) {
         this.name = name;
         this.capital = capital;
         this.shape = R.path(borderPath).attr({
@@ -25,38 +25,45 @@ $(document).ready(function(){
 
         this.dot = R.circle(cx,cy,2).attr({fill:'#000'});
         this.label = R.text(cx + offsetx, cy + offsety,name).attr({'font-size':12}).hide();
-        if(linePath)
+        if (linePath) {
             this.line = R.path(linePath).attr({stroke:'#000'}).hide();
+        }
         this.labelVisible = false;
     }
 
     State.prototype = {
-        showLabel:function(){
+        showLabel:function() {
             this.label.show().toFront();
-            if(this.line)
+            if(this.line) {
                 this.line.show().toFront();
+            }
             this.labelVisible = true;
         },
-        highlight:function(){
-            this.shape.animate({fill:'#DEF1FF',stroke:'#FFFB7A','stroke-width':3}, 1000).toFront();
+        highlight:function() {
+            this.shape.animate({
+                fill:'#DEF1FF', 
+                stroke:'#FFFB7A', 
+                'stroke-width':3
+            }, 1000).toFront();
             this.dot.toFront();
         },
-        reset:function(){
+        reset:function() {
             this.shape.attr({fill:'#FFF'});
             this.label.hide();
-            if(this.line)
+            if(this.line) {
                 this.line.hide();
+            }
             this.dot.toFront();
             this.labelVisible = false;
         },
-        labelToFront:function(){
-            if(this.labelVisible){
+        labelToFront:function() {
+            if(this.labelVisible) {
                 this.showLabel();
             }
         }
     };
 
-    function randInt(limit){
+    function randInt(limit) {
         return Math.floor(Math.random() * (limit + 1));
     }
 
@@ -113,7 +120,7 @@ $(document).ready(function(){
         ['WY','Wyoming','Cheyenne',320,231,-35,-35,null,'m 341.55633,156.88572 -11.12673,-0.93513 -31.01407,-3.18513 -15.68895,-1.98874 -27.40041,-3.97748 -19.22448,-2.87262 -1.37159,10.80192 -3.71074,23.44859 -5.08234,29.38915 -1.47976,10.16422 -1.61383,11.49094 6.30553,0.8973 16.32274,2.20971 8.53537,1.13718 19.88071,2.38489 36.01796,3.97745 23.64423,1.98877 4.19845,-42.86839 1.54679,-24.52779 1.26112,-17.53484 z']
     ];
 
-    for(var i = 0;i<data.length;i++){
+    for(var i = 0; i < data.length; i++) {
         var row = data[i];
         states[row[0]] = new State(row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8]);
     }
@@ -170,67 +177,78 @@ $(document).ready(function(){
     R.text(292.11,570.12,'100 mi');
     R.setFinish().attr({'font-size':8});
 
-    function getColorful(){
+    function getColorful() {
         var index = randInt(data.length - 1);
         var color = 'rgb(' + randInt(255).toString() + ',' + randInt(255).toString()  + ',' + randInt(255).toString()  + ')';
         var state = states[data[index][0]];
         state.shape.animate({fill:color},500,function(){
             state.shape.animate({fill:'#FFF'},500);
         });
-        setTimeout(function(){getColorful();},1);
+        setTimeout(function() { getColorful(); }, 1);
     }
 
-    function setUp(){
-        for(var i = 0; i < shapes.length; i++)
+    function setUp() {
+        var i, state;
+        for(i = 0; i < shapes.length; i++) {
             shapes[i].remove();
+        }
         shapes.length = 0;
         indexes.length = 0;
-        for(var i = 0; i < data.length; i++)
+        for(i = 0; i < data.length; i++) {
             indexes.push(i);
-        for(var state in states)
+        }
+        for(state in states) {
             states[state].reset();
+        }
     }
 
-    function prepEasy(itemIndex){
-        selectFive(inputState,1,itemIndex);
-        selectFive(inputCapital,2,itemIndex);
-        setTimeout(function(){inputState.focus();},100);
+    function prepEasy(itemIndex) {
+        selectFive(inputState, 1, itemIndex);
+        selectFive(inputCapital, 2, itemIndex);
+        setTimeout(function() { inputState.focus(); }, 100);
     }
 
-    function selectFive(input,dataIndex,itemIndex){
-        input[0].options.length = 0;
-        var possible = [];
-        for(var i = 0; i < data.length; i++){
+    function selectFive(input,dataIndex,itemIndex) {
+
+        var possible = [],
+            values,
+            shuffled = [],
+            i, r;
+
+        input[0].options.length = 0;       
+        for(i = 0; i < data.length; i++){
             possible.push(i);
         }
-        var values = [data[itemIndex][dataIndex]];
-        possible.splice(itemIndex,1);
-        for(var i = 0; i < 4; i++){
-            var r = randInt(possible.length - 1);
+        values = [data[itemIndex][dataIndex]];
+        possible.splice(itemIndex, 1);
+        for(i = 0; i < 4; i++){
+            r = randInt(possible.length - 1);
             values.push(data[possible[r]][dataIndex]);
             possible.splice(r,1);
         }
 
-        var shuffled = [];
-        while(values.length > 0)
-            shuffled.push(values.splice(randInt(values.length - 1),1)[0]);
+        while(values.length > 0) {
+            shuffled.push(values.splice(randInt(values.length - 1), 1)[0]);
+        }
 
         input.append('<option></option>');
-        for(var i = 0; i < shuffled.length; i++){
+        for(i = 0; i < shuffled.length; i++) {
             input.append('<option>' + shuffled[i] + '</option>');
         }
     }
 
-    function prepNoAction(){
+    function prepNoAction() {
         inputState.val('');
         inputCapital.val('');
-        setTimeout(function(){inputState.focus();},100);
+        setTimeout(function() { inputState.focus(); }, 100);
     }
 
-    function ask(){
-        if(indexes.length > 0){
-            var index = randInt(indexes.length - 1);
-            var dataIndex = indexes[index];
+    function ask() {
+        if(indexes.length > 0) {
+
+            var index = randInt(indexes.length - 1),
+                dataIndex = indexes[index];
+
             currentData = data[dataIndex];
             currentState = states[currentData[0]];
             currentState.highlight();
@@ -241,96 +259,103 @@ $(document).ready(function(){
         }
     }
 
-    function addArrow(x,y){
+    function addArrow(x,y) {
         var path = 'm ' + x.toString() + ',' + y.toString() + ' ';
-        if(x > 450)
+        if(x > 450) {
             arrow = R.path(path + '-30,14 5,-7 -125,0 0,-14 125,0 -5,-7 z').attr({fill:'#F00'});
-        else
+        } else {
             arrow = R.path(path + '30,-14 -5,7 125,0 0,14 -125,0 5,7 z').attr({fill:'#F00'});
+        }
     }
 
-    function showPanel(x,y){
+    function showPanel(x,y) {
         var os = map.offset();
-        if(x > 450)
-            answerPanel.css('left',os.left + x - 450);
-        else
-            answerPanel.css('left',os.left + x + 100);
-        answerPanel.css('top',os.top + y - 60);
+        if(x > 450) {
+            answerPanel.css('left', os.left + x - 450);
+        } else {
+            answerPanel.css('left', os.left + x + 100);
+        }
+        answerPanel.css('top', os.top + y - 60);
         answerPanel.show();
     }
 
-    function addCheck(){
+    function addCheck() {
         shapes.push(R.path('m ' + currentData[3] + ',' + (currentData[4] + 5) + ' -8,-12 8,3 10,-18 z').attr({fill:'#0F0'}));
     }
 
-    function addCross(){
+    function addCross() {
         shapes.push(R.path('m ' + currentData[3] + ',' + (currentData[4] - 5) + ' -4,-4 -4,4 4,4 -4,4 4,4 4,-4 4,4 4,-4 -4,-4 4,-4 -4,-4 z').attr({fill:'#F00'}));
         shapes.push(R.text(currentData[3] + 9,currentData[4] - 2,currentData[2]).attr({'text-anchor':'start'}));
     }
 
-    function warnAndGo(){
+    function warnAndGo() {
         $('#instructions').hide();
         $('#warning').show();
-        setTimeout(function(){$(document).bind('keydown touchstart', kd);},250);
+        setTimeout(function() { $(document).bind('keydown touchstart', kd); }, 250);
     }
 
-    function go(){
+    function go() {
         setUp();
         hideAnswer();
-        if(currentState)
+        if(currentState) {
             currentState.shape.stop().attr({fill:'#FFF',stroke:'#000','stroke-width':1});
+        }
         $('#warning').hide();
         $('#divMap').show();
-        setTimeout(function(){ask();},1000);
+        setTimeout(function() { ask(); }, 1000);
     }
 
-    function hideAnswer(){
+    function hideAnswer() {
         answerPanel.hide();
-        if(arrow){
+        if(arrow) {
             arrow.remove();
             arrow = null;
         }
     }
 
-    function kd(e){
-        if(e.preventDefault)
+    function kd(e) {
+        if(e.preventDefault) {
             e.preventDefault();
-        $(document).unbind('keydown touchstart',kd);
+        }
+        $(document).unbind('keydown touchstart', kd);
         go();
     }
 
-    $('#btnSubmit').click(function(){
-        if(currentState.name == inputState.val()){
+    $('#btnSubmit').click(function() {
+        var st, i;
+        if(currentState.name === inputState.val()) {
             currentState.shape.animate({fill:'#DFFFD9',stroke:'#000','stroke-width':1},1000);
-        }
-        else{
+        } else {
             currentState.shape.animate({fill:'#FFBABF',stroke:'#000','stroke-width':1},1000);
             currentState.showLabel();
         }
 
-        for(var st in states)
+        for(st in states) {
             states[st].labelToFront();
+        }
 
-        for(var i=0;i<shapes.length;i++)
+        for(i = 0; i < shapes.length; i++) {
             shapes[i].toFront();
+        }
 
-        if(currentState.capital == inputCapital.val())
+        if(currentState.capital === inputCapital.val()) {
             addCheck();
-        else
+        } else {
             addCross();
+        }
 
         hideAnswer();
-        setTimeout(function(){ask();},1000);
+        setTimeout(function() { ask(); }, 1000);
         return false;
     });
 
-    $('#btnReset').click(function(){
-         hideAnswer();
+    $('#btnReset').click(function() {
+        hideAnswer();
         $('#divMap').hide();
         $('#instructions').show();
     });
 
-    $('#btnEasy').click(function(){
+    $('#btnEasy').click(function() {
         $('.txt').hide();
         $('.ddl').show();
         inputState = $('#ddlState');
@@ -339,7 +364,10 @@ $(document).ready(function(){
         warnAndGo();
     });
 
-    $('#btnMedium').click(function(){
+    $('#btnMedium').click(function() {
+
+        var capitals = [], i;
+
         $('.txt').hide();
         $('.ddl').show();
         inputState = $('#ddlState');
@@ -349,21 +377,20 @@ $(document).ready(function(){
         inputCapital = $('#ddlCapital');
         inputCapital[0].options.length = 0;
         inputCapital.append('<option></option>');
-
-        var capitals = [];
-        for(var i = 0; i < data.length; i++){
+     
+        for(i = 0; i < data.length; i++) {
             inputState.append('<option>' + data[i][1] + '</option>');
             capitals.push(data[i][2]);
         }
         capitals.sort();
-        for(var i = 0; i < capitals.length; i++){
+        for(i = 0; i < capitals.length; i++) {
             inputCapital.append('<option>' + capitals[i] + '</option>');
         }
         prepAnswer = prepNoAction;
         warnAndGo();
     });
 
-    $('#btnHard').click(function(){
+    $('#btnHard').click(function() {
         $('.ddl').hide();
         $('.txt').show();
         inputState = $('#txtState');
@@ -373,4 +400,10 @@ $(document).ready(function(){
     });
 
     $('#divMap').hide();
+
+    $(window).resize(function() {
+        if(currentData && answerPanel.is(':visible')) {
+             showPanel(currentData[3],currentData[4]);
+        }
+    });
 });
