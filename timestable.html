@@ -1,90 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Math Facts - Practice Your Times Table</title>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-<meta name="title" content="Math Facts - Practice Your Times Table" />
-<meta name="description" content="Improve your multiplication accuracy and speed through practice." />
-<link rel="image_src" type="image/jpeg" href="img/tt_src.jpg" />
-<link rel="stylesheet" href="scatterbright.css" type="text/css" />
-<style>
-.tbl{
-    border-collapse:collapse;
-}
-.tbl td, .tbl th{
-    padding:5px;
-    border:1px solid #000000;
-}
-.tbl th{
-    background-color:#FFFFFF;
-}
-.correct{
-    background-color:#00FF00;
-}
-.incorrect{
-    background-color:#FF0000;
-}
-.center {
-    text-align:center;
-}
-.content table{
-    margin:0 auto;
-}
-#results{
-    display:none;
-}
-#resultsText{
-    background-color:#FFFFFF;
-    border:1px solid #000000;
-    border-radius: 20px;
-    font-size:24px;
-}
-</style>
+    <title>Math Facts - Practice Your Times Table</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="title" content="Math Facts - Practice Your Times Table" />
+    <meta name="description" content="Improve your multiplication accuracy and speed through practice." />
+    <link rel="image_src" type="image/jpeg" href="img/tt_src.jpg" />
+    <link rel="stylesheet" href="scatterbright.css" type="text/css" />
+    <style>
+        .tbl {
+            border-collapse: collapse;
+        }
+
+        .tbl td,
+        .tbl th {
+            padding: 5px;
+            border: 1px solid #000000;
+        }
+
+        .tbl th {
+            background-color: #FFFFFF;
+        }
+
+        .correct {
+            background-color: #00FF00;
+        }
+
+        .incorrect {
+            background-color: #FF0000;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .content table {
+            margin: 0 auto;
+        }
+
+        #results {
+            display: none;
+        }
+
+        #resultsText {
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+            border-radius: 20px;
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-<div id="divHeader">
-    <div class="content">
-        <a href="index.html">Scatterbright</a>
-    </div>
-</div>
-<div class="content center">
-    <h1>Math Facts - Practice Your Times Table</h1>
-    <div id="paper"></div>
-    <div id="results">
-        <div id="resultsText">
-            <p id="resultCorrect"></p>
-            <p id="resultTime"></p>
-            <p>Press [Enter] to try again.</p>
+    <div id="divHeader">
+        <div class="content">
+            <a href="index.html">Scatterbright</a>
         </div>
+    </div>
+    <div class="content center">
+        <h1>Math Facts - Practice Your Times Table</h1>
+        <div id="paper"></div>
+        <div id="results">
+            <div id="resultsText">
+                <p id="resultCorrect"></p>
+                <p id="resultTime"></p>
+                <p>Press [Enter] to try again.</p>
+            </div>
+            <p>
+                <script type="text/javascript">
+                    document.write('<table class="tbl" cellspacing="0">');
+                    document.write('<tr>');
+                    document.write('<th>x</th>');
+                    for (var i = 0; i <= 11; i++) {
+                        document.write('<th>' + i.toString() + '</th>');
+                    }
+                    document.write('</tr>');
+                    for (var i = 0; i <= 11; i++) {
+                        document.write('<tr>');
+                        document.write('<th>' + i.toString() + '</th>');
+                        for (var j = 0; j <= 11; j++) {
+                            document.write('<td id="td' + i.toString() + '_' + j.toString() + '">' + (i * j).toString() + '</td>');
+                        }
+                        document.write('</tr>');
+                    }
+                    document.write('</table>');
+                </script>
+            </p>
+        </div>
+    </div>
+    <div id="divFooter">
         <p>
-        <script type="text/javascript">
-        document.write('<table class="tbl" cellspacing="0">');
-        document.write('<tr>');
-        document.write('<th>x</th>');
-        for(var i = 0; i <= 11; i++){
-            document.write('<th>' + i.toString() + '</th>');
-        }
-        document.write('</tr>');
-        for(var i = 0; i <= 11; i++){
-            document.write('<tr>');
-            document.write('<th>' + i.toString() + '</th>');
-            for(var j = 0; j <= 11; j++){
-                document.write('<td id="td' + i.toString() + '_' + j.toString() +'">' + (i * j).toString() +'</td>');
-            }
-            document.write('</tr>');
-        }
-        document.write('</table>');
-        </script>
+            A special thanks to Dmitry Baranovskiy for his amazing SVG/VML library,
+            <a href="http://raphaeljs.com/">Raphaël</a>.
         </p>
     </div>
-</div>
-<div id="divFooter">
-    <p>
-    A special thanks to Dmitry Baranovskiy for his amazing SVG/VML library, <a href="http://raphaeljs.com/">Raphaël</a>.
-    </p>
-</div>
-<script type="text/javascript" src="script/jquery.min.js"></script>
-<script type="text/javascript" src="script/raphael-min.js"></script>
-<script type="text/javascript" src="script/timestable.js"></script>
+    <script type="text/javascript" src="script/jquery.min.js"></script>
+    <script type="text/javascript" src="script/raphael-min.js"></script>
+    <script type="text/javascript" src="script/timestable.js"></script>
 </body>
 </html>

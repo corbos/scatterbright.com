@@ -1,145 +1,162 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>US States and their Capitals</title>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="title" content="US States and their Capitals" />
-<meta name="description" content="Test yourself on US states and capitals.
+    <title>US States and their Capitals</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="title" content="US States and their Capitals" />
+    <meta name="description" content="Test yourself on US states and capitals.
 A little rusty? We have multiple choice. Very confident? Then fill in the blank. It's fun and easy!" />
-<link rel="image_src" type="image/jpeg" href="img/st_src.jpg" />
-<link rel="stylesheet" href="scatterbright.css" type="text/css" />
-<style>
-label {
-    width:100px;
-    float:left;
-}
-.ddl {
-    display:none;
-}
-.frmHeader {
-    border-bottom:2px solid #B81F02;
-    margin-bottom:10px;
-}
-.small-font {
-    font-size: 10px;
-}
-.col-head {
-    height: 100px;
-}
-.img-outline {
-    border:1px solid #000;
-}
-#map {
-    width:900px;
-    height:600px;
-    border:1px solid #000;
-}
-#mapControls {
-    text-align:right;
-    padding:5px;
-}
-#answer {
-    padding:10px;
-    position:absolute;
-    border:1px solid #000;
-    border-radius:20px;
-    background-color:#FEFFF7;
-    text-align:left;
-    display: none
-}
-#answer .frm {
-    padding-bottom:10px;
-}
-#answer .frmLast {
-    text-align:right;
-}
-#warning {
-    width: 100%;
-    display:none;
-}
-</style>
-<script type="text/javascript" src="script/jquery.min.js"></script>
-<script type="text/javascript" src="script/raphael-min.js"></script>
-<script type="text/javascript" src="script/states.js"></script>
+    <link rel="image_src" type="image/jpeg" href="img/st_src.jpg" />
+    <link rel="stylesheet" href="scatterbright.css" type="text/css" />
+    <style>
+        label {
+            width: 75px;
+            display: inline-block;
+        }
+
+        .ddl {
+            display: none;
+        }
+
+        .frmHeader {
+            border-bottom: 2px solid #B81F02;
+            margin-bottom: 10px;
+        }
+
+        .small-font {
+            font-size: 10px;
+        }
+
+        .col-head {
+            height: 100px;
+        }
+
+        .img-outline {
+            border: 1px solid #000;
+        }
+
+        #map {
+            width: 900px;
+            height: 600px;
+            border: 1px solid #000;
+        }
+
+        #mapControls {
+            text-align: right;
+            padding: 5px;
+        }
+
+        #answer {
+            padding: 10px;
+            position: absolute;
+            border: 1px solid #000;
+            border-radius: 20px;
+            background-color: #FEFFF7;
+            text-align: left;
+            display: none
+        }
+
+        #answer .frm {
+            padding-bottom: 10px;
+        }
+
+        #answer .frmLast {
+            text-align: right;
+        }
+
+        #warning {
+            width: 100%;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div id="divHeader">
+    <div id="divHeader">
+        <div class="content">
+            <a href="index.html">Scatterbright</a>
+        </div>
+    </div>
     <div class="content">
-        <a href="index.html">Scatterbright</a>
-    </div>
-</div>
-<div class="content">
-    <h1>US States and Their Capitals</h1>
-    <div id="instructions">
-        <p>
-        Do you know all fifty US states and their capitals? Take this quick test and see how much you remember.
-        </p>
-        <h2>Choose your level of difficulty</h2>
-        <p>
-        <button type="button" id="btnEasy">Level 1</button> - Choose states and capitals from a list of five options.
-        </p>
-        <p>
-        <button type="button" id="btnMedium">Level 2</button> - Choose states and capitals from a list of all possible states and capitals.
-        </p>
-        <p>
-        <button type="button" id="btnHard">Level 3</button> - Enter states and capitals from memory without multiple choice. Spelling is important!
-        </p>
-    </div>
-    <div id="warning">
-        <div class="flow">
-            <p class="col-head">Heads up! The states circled below have been moved and resized so we can show more state and less empty space
-            on your test map. This is not where they are located.
+        <h1>US States and Their Capitals</h1>
+        <div id="instructions">
+            <p>
+                Do you know all fifty US states and their capitals? Take this quick test and see how much you remember.
             </p>
-            <img src="img/testmap_small.jpg" alt="Test Map" />
-        </div>
-        <div class="flow">
-            <p class="col-head">
-            Their actual locations in relation to the other 48 states are circled below. Don't be fooled on other maps.
+            <h2>Choose your level of difficulty</h2>
+            <p>
+                <button type="button" id="btnEasy">Level 1</button> - Choose states and capitals from a list of five options.
             </p>
-            <img src="img/refmap_small.jpg" alt="Reference Map" class="img-outline" />
-            <p class="small-font">
-            Map courtesy of the University of Texas Libraries, The University of Texas at Austin. 
-            Visit the <a href="http://lib.utexas.edu/maps/united_states.html">Perry-Castañeda Library Map Collection</a>.
+            <p>
+                <button type="button" id="btnMedium">Level 2</button> - Choose states and capitals from a list of all possible states and capitals.
             </p>
-        </div>       
-       
-        <h3 class="clear">Press any key to begin.</h3>
-    </div>
-    <div id="divMap">
-        <div id="map"></div>
-        <div id="mapControls">
-            <input type="button" id="btnReset" value="Start Over" />
+            <p>
+                <button type="button" id="btnHard">Level 3</button> - Enter states and capitals from memory without multiple choice. Spelling is important!
+            </p>
+        </div>
+        <div id="warning" class="container">
+            <div class="flow">
+                <p class="col-head">Heads up! The states circled below have been moved and resized so we can show more state and less empty space
+                    on your test map. This is not where they are located.
+                </p>
+                <img src="img/testmap_small.jpg" alt="Test Map" />
+            </div>
+            <div class="flow">
+                <p class="col-head">
+                    Their actual locations in relation to the other 48 states are circled below. Don't be fooled on other maps.
+                </p>
+                <img src="img/refmap_small.jpg" alt="Reference Map" class="img-outline" />
+                <p class="small-font">
+                    Map courtesy of the University of Texas Libraries, The University of Texas at Austin. Visit the
+                    <a href="http://lib.utexas.edu/maps/united_states.html">Perry-Castañeda Library Map Collection</a>.
+                </p>
+            </div>
+
+            <h3>Press any key to begin.</h3>
+        </div>
+        <div id="divMap">
+            <div id="map"></div>
+            <div id="mapControls">
+                <button type="button" id="btnReset">Start Over</button>
+            </div>
         </div>
     </div>
-</div>
-<div id="divFooter">
-    <p>
-    A special thanks to Dmitry Baranovskiy for his amazing SVG/VML library, <a href="http://raphaeljs.com/">Raphaël</a>.
-    </p>
-    <p>
-    The test map was built using SVG paths from <a href="https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg">
-        https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg</a>.
-    <br />Please note licensing restrictions if you intend to copy or adapt the map.
-    </p>
-</div>
-<div id="answer">
-    <form>
-        <div class="frmHeader">
-            Which state is this and what is its capital?
-        </div>
-        <div class="frm">
-            <label for="txtState" class="txt">State</label> <input type="text" id="txtState" autocomplete="off" class="txt" />
-            <label for="ddlState" class="ddl">State</label> <select id="ddlState" class="ddl"></select>
-        </div>
-        <div class="frm">
-            <label for="txtCapital" class="txt">Capital</label> <input type="text" id="txtCapital" autocomplete="off" class="txt" />
-            <label for="ddlCapital" class="ddl">Capital</label> <select id="ddlCapital" class="ddl"></select>
-        </div>
-        <div class="frmLast">
-            <input type="submit" id="btnSubmit" value="Submit" />
-        </div>
-    </form>
-</div>
+    <div id="divFooter">
+        <p>
+            A special thanks to Dmitry Baranovskiy for his amazing SVG/VML library,
+            <a href="http://raphaeljs.com/">Raphaël</a>.
+        </p>
+        <p>
+            The test map was built using SVG paths from
+            <a href="https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg">
+                https://en.wikipedia.org/wiki/File:Map_of_USA_with_state_names.svg</a>.
+            <br />Please note licensing restrictions if you intend to copy or adapt the map.
+        </p>
+    </div>
+    <div id="answer">
+        <form>
+            <div class="frmHeader">
+                Which state is this and what is its capital?
+            </div>
+            <div class="frm">
+                <label for="txtState" class="txt">State</label>
+                <input type="text" id="txtState" autocomplete="off" class="txt" />
+                <label for="ddlState" class="ddl">State</label>
+                <select id="ddlState" class="ddl"></select>
+            </div>
+            <div class="frm">
+                <label for="txtCapital" class="txt">Capital</label>
+                <input type="text" id="txtCapital" autocomplete="off" class="txt" />
+                <label for="ddlCapital" class="ddl">Capital</label>
+                <select id="ddlCapital" class="ddl"></select>
+            </div>
+            <div class="frmLast">
+                <button type="submit" id="btnSubmit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="script/jquery.min.js"></script>
+    <script type="text/javascript" src="script/raphael-min.js"></script>
+    <script type="text/javascript" src="script/states.js"></script>
 </body>
 </html>

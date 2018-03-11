@@ -1,238 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>The Travelling Salesman Problem - WillyLoman</title>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="The Travelling Salesman Problem" />
-<link rel="stylesheet" href="scatterbright.css" type="text/css" />
-<style>
-#thecanvas {
-    background-color:#FFF;
-    border: 1px solid #000;
-}
-#lnkMore {
-    text-decoration:none;
-}
-#canvasHeader {
-    margin: 25px 0px 15px 0px;
-}
-#canvasFooter {
-    width: 100%;
-    overflow: auto;
-}
-#more {
-    margin-bottom: 100px;
-}
-#divStatus {
-    float: right;
-    width: 325px;
-    padding-top: 30px;
-}
-#divAlgo {
-    float:left;
-}
-#algoContainer {
-    min-height: 100px;
-    width: 500px;
-    margin-top: 10px;
-    padding: 15px 10px 15px 10px;
-    background-color: #dff0d8;
-    border: 1px solid #3e763d;
-    border-radius: 10px;
-}
-#algoContainer > div {
-    display: none;
-}
-</style>
+    <title>The Travelling Salesman Problem - WillyLoman</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The Travelling Salesman Problem" />
+    <link rel="stylesheet" href="scatterbright.css" type="text/css" />
+    <style>
+        #thecanvas {
+            background-color: #FFF;
+            border: 1px solid #000;
+        }
+
+        #lnkMore {
+            text-decoration: none;
+        }
+
+        #canvasHeader {
+            margin: 25px 0px 15px 0px;
+        }
+
+        #canvasFooter {
+            width: 100%;
+            overflow: auto;
+        }
+
+        #more {
+            margin-bottom: 100px;
+        }
+
+        #divStatus {
+            float: right;
+            width: 325px;
+            padding-top: 30px;
+        }
+
+        #divAlgo {
+            float: left;
+        }
+
+        #algoContainer {
+            min-height: 100px;
+            width: 500px;
+            margin-top: 10px;
+            padding: 15px 10px 15px 10px;
+            background-color: #dff0d8;
+            border: 1px solid #3e763d;
+            border-radius: 10px;
+        }
+
+        #algoContainer>div {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div id="divHeader">
+    <div id="divHeader">
+        <div class="content">
+            <a href="index.html">Scatterbright</a>
+        </div>
+    </div>
     <div class="content">
-        <a href="index.html">Scatterbright</a>
-    </div>
-</div>
-<div class="content">
-    <h1>Solving a Travelling Salesman Problem with WillyLoman</h1>
-    <p>
-    Imagine a bunch of cities, say, the <a href="https://en.wikipedia.org/wiki/List_of_cities_in_Minnesota">35 largest cities in Minnesota</a>.
-    Your job is to visit each city once and only once covering the fewest total miles possible. (Visiting a city more than once will never improve your solution.
-    Consider why that might be true.) That's the Travelling Salesman Problem<sup><a href="#more" id="lnkMore">*</a></sup>.
-    </p>
-    <ul>
-        <li>
-        More about the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem at Wikipedia</a>
-        </li>
-        <li>
-        More about <a href="https://github.com/corbos/WillyLoman">WillyLoman at Github</a>
-        </li>
-    </ul>
-    <div id="canvasHeader">
-        <h2>Click on the canvas to add cities.</h2>
-        <div>
-            ...or add
-            <input type="text" id="txtAddCount" value="35"> random points.
-            <button type="button" id="btnAddRandom">Add</button>
+        <h1>Solving a Travelling Salesman Problem with WillyLoman</h1>
+        <p>
+            Imagine a bunch of cities, say, the
+            <a href="https://en.wikipedia.org/wiki/List_of_cities_in_Minnesota">35 largest cities in Minnesota</a>. Your job is to visit each city once and only once covering the fewest total
+            miles possible. (Visiting a city more than once will never improve your solution. Consider why that might be
+            true.) That's the Travelling Salesman Problem
+            <sup>
+                <a href="#more" id="lnkMore">*</a>
+            </sup>.
+        </p>
+        <ul>
+            <li>
+                More about the
+                <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem at Wikipedia</a>
+            </li>
+            <li>
+                More about
+                <a href="https://github.com/corbos/WillyLoman">WillyLoman at Github</a>
+            </li>
+        </ul>
+        <div id="canvasHeader">
+            <h2>Click on the canvas to add cities.</h2>
+            <div>
+                ...or add
+                <input type="text" id="txtAddCount" value="35"> random points.
+                <button type="button" id="btnAddRandom">Add</button>
+            </div>
         </div>
-    </div>
-    <canvas id="thecanvas" width="800" height="500">
-        Your browser does not support the canvas element. Sorry.
-    </canvas>
-    <div id="canvasFooter">
-        <div id="divStatus">
-            Cities: <span id="spnPointCount">0</span><br>
-            Distance: <span id="spnDistance"></span><br>
-            Iteration: <span id="spnIteration"></span><br>
-            Improvements: <span id="spnImprovement"></span>
-        </div>
+        <canvas id="thecanvas" width="800" height="500">
+            Your browser does not support the canvas element. Sorry.
+        </canvas>
+        <div id="canvasFooter">
+            <div id="divStatus">
+                Cities:
+                <span id="spnPointCount">0</span>
+                <br> Distance:
+                <span id="spnDistance"></span>
+                <br> Iteration:
+                <span id="spnIteration"></span>
+                <br> Improvements:
+                <span id="spnImprovement"></span>
+            </div>
 
-        <div id="divAlgo">
-            <select id="ddlAlgo"></select>
-            <button type="button" id="btnGo">Solve</button>
-            <button type="button" id="btnStop">Stop</button>
-            <button type="button" id="btnClear">Clear</button>
-            <div id="algoContainer">
-                <div id="divInOrder">
-                    This algorithm visits each city in the order they were added to the problem. It doesn't change or improve.
-                </div>
-                <div id="divOneRandom">
-                    Generates a random solution and quits.
-                </div>
-                <div id="divIterateRandom">
-                    Generates a random solution. If it's better than the current solution, it keeps it. If not, it runs again. This
-                    algorithm runs until you stop it.
-                </div>
-                <div id="divBestNearestNeighbor">
-                    Moves to the nearest neighbor from the current city until it's visited every city. Repeats this process starting from every city.
-                    Keeps the best result.<br><br>
-                    This is a good baseline to test against other algorithms.
-                </div>
-                <div id="divBruteForce">
-                    This algorithm tries every single possibility to determine the shortest route. As such, it's very slow. For
-                    tours larger than a dozen cities, you'll be waiting for a long time. Much larger than that and you'll be waiting
-                    forever.
-                </div>
-                <div id="divBranchNBound">
-                    Similar to a brute force algorithm except it tries to determine when a partial solution is hopeless.
-                    If the best it can hope for is worse than its current best, it tries something else.
-                </div>
-                <div id="divDynamic">
-                    Uses <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a> to determine the solution.
-                    That means you won't see progress until it's done. It just thinks and thinks and ... boom, gives you a solution.
-                    It's pretty good at solving small tours, but will eat up all your memory
-                    and more as the tours grow.
-                </div>
-                <div id="divGA">
-                    Imagine that a solution is a gene. Create a bunch, determine which are best, breed them, and repeat forever. 
-                    "Breeding" a solution means a chance of mutation (cities jump to a new location) 
-                    or crossing two solutions (taking a subtour from one and merge it with another) or both.
-                    <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">More here.</a>
-                </div>
-                <div id="divGAMutation">
-                    Just the mutation process of a genetic algorithm.
-                </div>
-                <div id="divGACrossover">
-                    Just the crossover process of a genetic algorithm.
-                </div>
-                <div id="divTwoOptFirst">
-                    A 2-opt algorithm picks two edges (in the graph world) and determines if swapping their endpoints will improve the solution.
-                    If it does, it keeps it. This version keeps the first improvement and starts again.
-                </div>
-                <div id="divTwoOptBest">
-                    Another 2-opt algorithm. This one tries all possible swaps and keeps the best.
+            <div id="divAlgo">
+                <select id="ddlAlgo"></select>
+                <button type="button" id="btnGo">Solve</button>
+                <button type="button" id="btnStop">Stop</button>
+                <button type="button" id="btnClear">Clear</button>
+                <div id="algoContainer">
+                    <div id="divInOrder">
+                        This algorithm visits each city in the order they were added to the problem. It doesn't change or improve.
+                    </div>
+                    <div id="divOneRandom">
+                        Generates a random solution and quits.
+                    </div>
+                    <div id="divIterateRandom">
+                        Generates a random solution. If it's better than the current solution, it keeps it. If not, it runs again. This algorithm
+                        runs until you stop it.
+                    </div>
+                    <div id="divBestNearestNeighbor">
+                        Moves to the nearest neighbor from the current city until it's visited every city. Repeats this process starting from every
+                        city. Keeps the best result.
+                        <br>
+                        <br> This is a good baseline to test against other algorithms.
+                    </div>
+                    <div id="divBruteForce">
+                        This algorithm tries every single possibility to determine the shortest route. As such, it's very slow. For tours larger
+                        than a dozen cities, you'll be waiting for a long time. Much larger than that and you'll be waiting
+                        forever.
+                    </div>
+                    <div id="divBranchNBound">
+                        Similar to a brute force algorithm except it tries to determine when a partial solution is hopeless. If the best it can hope
+                        for is worse than its current best, it tries something else.
+                    </div>
+                    <div id="divDynamic">
+                        Uses
+                        <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a> to determine the solution. That means you won't see progress until it's done.
+                        It just thinks and thinks and ... boom, gives you a solution. It's pretty good at solving small tours,
+                        but will eat up all your memory and more as the tours grow.
+                    </div>
+                    <div id="divGA">
+                        Imagine that a solution is a gene. Create a bunch, determine which are best, breed them, and repeat forever. "Breeding" a
+                        solution means a chance of mutation (cities jump to a new location) or crossing two solutions (taking
+                        a subtour from one and merge it with another) or both.
+                        <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">More here.</a>
+                    </div>
+                    <div id="divGAMutation">
+                        Just the mutation process of a genetic algorithm.
+                    </div>
+                    <div id="divGACrossover">
+                        Just the crossover process of a genetic algorithm.
+                    </div>
+                    <div id="divTwoOptFirst">
+                        A 2-opt algorithm picks two edges (in the graph world) and determines if swapping their endpoints will improve the solution.
+                        If it does, it keeps it. This version keeps the first improvement and starts again.
+                    </div>
+                    <div id="divTwoOptBest">
+                        Another 2-opt algorithm. This one tries all possible swaps and keeps the best.
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="more">
+            <p>
+                <sup>*</sup>This is just one variation of the TSP. There are many others. For example, instead of cities on a
+                map, consider visiting points in three dimensional space or four dimensions or five. Consider other costs.
+                Distance (mileage) may not be important. Maybe the important costs are tolls or travel time or path quality
+                (road conditions, error rates in a computer network, etc) or some combination. What makes these problems
+                similar is that they can all be represented as a
+                <a href="https://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>. Graph nodes are cities, computers, neurons, etc. and edges are roads, fiber optic cable, or synapses.
+                Each edge has a cost. A TSP algorithm traverses the graph with the smallest possible cost.
+            </p>
+            <p>
+                For the politically curious, the Travelling Sales
+                <em>man</em> Problem is no more about men than breakfast cereal or socks or air travel. We could just as easily
+                call it the Pollinating Bee Problem. We don't, though. Instead, we call it the Travelling Salesman Problem
+                because that's what everyone else calls it and that helps us find things on the internet and in the library.
+            </p>
+        </div>
     </div>
-    <div id="more">
-        <p>
-        <sup>*</sup>This is just one variation of the TSP. There are many others. For example, instead of cities on a map, consider visiting points in
-        three dimensional space or four dimensions or five. Consider other costs. Distance (mileage) may not be important. Maybe the
-        important costs are tolls or travel time or path quality (road conditions, error rates in a computer network, etc) or some combination.
-        What makes these problems similar is that they can all be represented as a <a href="https://en.wikipedia.org/wiki/Graph_(mathematics)">graph</a>.
-        Graph nodes are cities, computers, neurons, etc. and edges are roads, fiber optic cable, or synapses. Each edge has a cost. A TSP
-        algorithm traverses the graph with the smallest possible cost.
-        </p>
-        <p>
-        For the politically curious, the Travelling Sales<em>man</em> Problem is no more about men than breakfast cereal
-        or socks or air travel. We could just as easily call it the Pollinating Bee Problem. We don't, though. Instead, we call it the Travelling Salesman Problem because
-        that's what everyone else calls it and that helps us find things on the internet and in the library.
-        </p>
-    </div>
-</div>
-<script type="text/javascript" src="tsp/WillyLoman.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.inorder.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.onerandom.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.iteraterandom.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.bestnearestneighbor.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.bruteforce.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.branchnbound.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.dynamic.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.ga.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.gamutation.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.gacrossover.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.twooptfirst.js"></script>
-<script type="text/javascript" src="tsp/corbos.tsp.twooptbest.js"></script>
-<script type="text/javascript" src="tsp/WillyLoman.UI.js"></script>
-<script type="text/javascript">
-(function() {
+    <script type="text/javascript" src="tsp/WillyLoman.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.inorder.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.onerandom.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.iteraterandom.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.bestnearestneighbor.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.bruteforce.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.branchnbound.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.dynamic.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.ga.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.gamutation.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.gacrossover.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.twooptfirst.js"></script>
+    <script type="text/javascript" src="tsp/corbos.tsp.twooptbest.js"></script>
+    <script type="text/javascript" src="tsp/WillyLoman.UI.js"></script>
+    <script type="text/javascript">
+        (function () {
 
-    var byId = function(id) { return document.getElementById(id); },
+            var byId = function (id) { return document.getElementById(id); },
 
-        thecanvas = byId('thecanvas'),
-        spnDistance = byId('spnDistance'),
-        spnIteration = byId('spnIteration'),
-        spnImprovement = byId('spnImprovement'),
-        spnPointCount = byId('spnPointCount'),
-        ddlAlgo = byId('ddlAlgo'),
+                thecanvas = byId('thecanvas'),
+                spnDistance = byId('spnDistance'),
+                spnIteration = byId('spnIteration'),
+                spnImprovement = byId('spnImprovement'),
+                spnPointCount = byId('spnPointCount'),
+                ddlAlgo = byId('ddlAlgo'),
 
-        notify = function(data) {
-            spnDistance.innerHTML = data.distance;
-            spnIteration.innerHTML = data.iteration;
-            spnImprovement.innerHTML = data.improvements;
-        },
+                notify = function (data) {
+                    spnDistance.innerHTML = data.distance;
+                    spnIteration.innerHTML = data.iteration;
+                    spnImprovement.innerHTML = data.improvements;
+                },
 
-        selectedAlgoId,
-        showHideAlgoDescription = function () {
+                selectedAlgoId,
+                showHideAlgoDescription = function () {
 
-            var id = "div" + ddlAlgo.value,
-                elem = byId(id);
+                    var id = "div" + ddlAlgo.value,
+                        elem = byId(id);
 
-            if (selectedAlgoId) {
-                byId(selectedAlgoId).style.display = 'none';
+                    if (selectedAlgoId) {
+                        byId(selectedAlgoId).style.display = 'none';
+                    }
+                    if (elem) {
+                        byId(id).style.display = 'block';
+                        selectedAlgoId = id;
+                    }
+                },
+
+                ui = new WillyLoman.UI(thecanvas, notify);
+
+            for (var key in WillyLoman.algorithms) {
+                ddlAlgo.appendChild(new Option(WillyLoman.algorithms[key].name, key));
             }
-            if (elem) {
-                byId(id).style.display = 'block';
-                selectedAlgoId = id;
-            }
-        },
+            byId('btnAddRandom').addEventListener('click', function () {
+                ui.addRandom(byId('txtAddCount').value);
+                spnPointCount.innerHTML = ui.solver.points.length;
+            });
+            byId('btnClear').addEventListener('click', function () {
+                ui.clear();
+            });
+            byId('btnGo').addEventListener('click', function () {
+                ui.solve(ddlAlgo.value);
+            });
+            byId('btnStop').addEventListener('click', function () {
+                ui.stop();
+            });
+            thecanvas.addEventListener('mousedown', function () {
+                setTimeout(function () { spnPointCount.innerHTML = ui.solver.points.length; }, 0);
+            });
+            ddlAlgo.addEventListener('change', showHideAlgoDescription);
 
-        ui = new WillyLoman.UI(thecanvas, notify);
-
-    for(var key in WillyLoman.algorithms) {
-        ddlAlgo.appendChild(new Option(WillyLoman.algorithms[key].name, key));
-    }
-    byId('btnAddRandom').addEventListener('click', function() {
-        ui.addRandom(byId('txtAddCount').value);
-        spnPointCount.innerHTML = ui.solver.points.length;
-    });
-    byId('btnClear').addEventListener('click', function() {
-        ui.clear();
-    });
-    byId('btnGo').addEventListener('click', function() {
-        ui.solve(ddlAlgo.value);
-    });
-    byId('btnStop').addEventListener('click', function() {
-        ui.stop();
-    });
-    thecanvas.addEventListener('mousedown', function() {
-        setTimeout(function () { spnPointCount.innerHTML = ui.solver.points.length; }, 0);
-    });
-    ddlAlgo.addEventListener('change', showHideAlgoDescription);
-
-    showHideAlgoDescription();
-})();
-</script>
+            showHideAlgoDescription();
+        })();
+    </script>
 </body>
 </html>
-
