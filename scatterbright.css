@@ -92,14 +92,16 @@ button {
     margin: 0px 5px 5px 0px;
     padding: 0px 10px 0px 10px;
     display: table;
-    flex-grow: 1;
     width: 175px;
+}
+
+.cell:hover {
+    box-shadow: 2px 2px 3px #999;
 }
 
 .elsewhere {
     background-color: #ced4ff;
     border: 1px solid #000;
-    /* width: 145px; */
     height: 75px;
 }
 
@@ -121,7 +123,6 @@ button {
 .noodle {
     background-color: #ffffcc;
     border: 1px solid #000;
-    /* width: 175px; */
     height: 225px;
 }
 
@@ -142,7 +143,6 @@ button {
 .writing {
     background-color: #ffdad6;
     border: 1px solid #000;
-    /* width: 175px; */
     height: 110px;
 }
 
