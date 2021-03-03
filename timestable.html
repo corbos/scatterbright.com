@@ -78,7 +78,8 @@
                         document.write('<tr>');
                         document.write('<th>' + i.toString() + '</th>');
                         for (var j = 0; j <= 11; j++) {
-                            document.write('<td id="td' + i.toString() + '_' + j.toString() + '">' + (i * j).toString() + '</td>');
+                            document.write('<td id="td' + i.toString() + '_' + j.toString() + '">' + (i * j)
+                                .toString() + '</td>');
                         }
                         document.write('</tr>');
                     }
@@ -93,7 +94,6 @@
             <a href="http://raphaeljs.com/">Raphaël</a>.
         </p>
     </div>
-    <script type="text/javascript" src="script/jquery.min.js"></script>
     <script type="text/javascript" src="script/raphael-min.js"></script>
     <script type="text/javascript" src="script/timestable.js"></script>
 </body>

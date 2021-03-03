@@ -36,6 +36,10 @@ A little rusty? We have multiple choice. Very confident? Then fill in the blank.
             border: 1px solid #000;
         }
 
+        #divMap {
+            display: none;
+        }
+
         #map {
             width: 900px;
             height: 600px;
@@ -69,6 +73,18 @@ A little rusty? We have multiple choice. Very confident? Then fill in the blank.
             width: 100%;
             display: none;
         }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            overflow: auto;
+        }
+
+        .flow {
+            max-width: 450px;
+            padding-right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -85,25 +101,30 @@ A little rusty? We have multiple choice. Very confident? Then fill in the blank.
             </p>
             <h2>Choose your level of difficulty</h2>
             <p>
-                <button type="button" id="btnEasy">Level 1</button> - Choose states and capitals from a list of five options.
+                <button type="button" id="btnEasy">Level 1</button> - Choose states and capitals from a list of five
+                options.
             </p>
             <p>
-                <button type="button" id="btnMedium">Level 2</button> - Choose states and capitals from a list of all possible states and capitals.
+                <button type="button" id="btnMedium">Level 2</button> - Choose states and capitals from a list of all
+                possible states and capitals.
             </p>
             <p>
-                <button type="button" id="btnHard">Level 3</button> - Enter states and capitals from memory without multiple choice. Spelling is important!
+                <button type="button" id="btnHard">Level 3</button> - Enter states and capitals from memory without
+                multiple choice. Spelling is important!
             </p>
         </div>
         <div id="warning" class="container">
             <div class="flow">
-                <p class="col-head">Heads up! The states circled below have been moved and resized so we can show more state and less empty space
+                <p class="col-head">Heads up! The states circled below have been moved and resized so we can show more
+                    state and less empty space
                     on your test map. This is not where they are located.
                 </p>
                 <img src="img/testmap_small.jpg" alt="Test Map" />
             </div>
             <div class="flow">
                 <p class="col-head">
-                    Their actual locations in relation to the other 48 states are circled below. Don't be fooled on other maps.
+                    Their actual locations in relation to the other 48 states are circled below. Don't be fooled on
+                    other maps.
                 </p>
                 <img src="img/refmap_small.jpg" alt="Reference Map" class="img-outline" />
                 <p class="small-font">

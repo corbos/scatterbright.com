@@ -37,97 +37,20 @@
             font-size: 12px;
             vertical-align: super;
         }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            overflow: auto;
+        }
+
+        .flow {
+            max-width: 450px;
+            padding-right: 20px;
+        }
     </style>
-    <script type="text/javascript" src="script/jquery.min.js"></script>
-    <script type="text/javascript" src="jscolor/jscolor.js"></script>
-    <script type="text/javascript">
 
-        function drawArrow(ctx) {
-            ctx.fillStyle = '#' + document.getElementById('txtArrow').value;
-            ctx.beginPath();
-            ctx.moveTo(15, 15);
-            ctx.lineTo(30, 70);
-            ctx.lineTo(40, 60);
-            ctx.lineTo(90, 110);
-            ctx.lineTo(110, 90);
-            ctx.lineTo(60, 40);
-            ctx.lineTo(70, 30);
-            ctx.fill();
-        }
-
-        function drawText(ctx) {
-            var txt = document.getElementById('txt').value;
-            ctx.fillStyle = '#' + document.getElementById('txtFontColor').value;
-            var fontPx = 32;
-            var fontPxInt = parseInt(document.getElementById('txtFontPx').value);
-            if (!isNaN(fontPxInt)) {
-                fontPx = fontPxInt;
-            }
-            var font = document.getElementById('ddlFont').value;
-            if (font.indexOf(' ') >= 0)
-                font = '"' + font + '"';
-
-            ctx.font = ($('#chkBold').is(':checked') ? '700' : '400') + ' ' + fontPx.toString() + 'px ' + font;
-            ctx.fillText('This Person', 115, 115);
-            var lines = txt.replace('\r\n', '\n').replace('\r', '\n').split('\n');
-            fontPx += 4;
-            for (var i = 0; i < lines.length; i++) {
-                ctx.fillText(lines[i], 20, 115 + fontPx * (i + 1));
-            }
-        }
-
-        function withDropShadow(ctx, func) {
-            ctx.save();
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = '#888888';
-            func(ctx);
-            ctx.restore();
-        }
-
-        function draw() {
-
-            var canvas = document.getElementById('thecanvas');
-            var ctx = canvas.getContext('2d');
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#' + document.getElementById('txtBorder').value;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#' + document.getElementById('txtBg').value;
-            ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
-
-            if ($('#chkDropShadow').is(':checked')) {
-                withDropShadow(ctx, drawArrow);
-                withDropShadow(ctx, drawText);
-            }
-            else {
-                drawArrow(ctx);
-                drawText(ctx);
-            }
-
-            document.getElementById('img').src = canvas.toDataURL("image/png");
-        }
-
-        $(document).ready(function () {
-            var canvas = document.getElementById('thecanvas');
-            if (canvas.getContext && canvas.toDataURL) {
-                $('#txt,#txtFontPx').keyup(function () {
-                    draw();
-                });
-                $('#txtFontColor,#txtBg,#txtBorder,#txtArrow,#ddlFont,#chkBold,#chkDropShadow').change(function () {
-                    draw();
-                });
-                draw();
-            }
-            else {
-                $('#divContent').hide();
-                $('#divBroken').show();
-            }
-        });
-    </script>
 </head>
 <body>
     <div id="divHeader">
@@ -139,16 +62,17 @@
         <canvas id="thecanvas" width="400" height="400">
             Your browser does not support the canvas element. Sorry.
         </canvas>
-        <h1>Create a "This Person" message for Facebook or Google+ in three easy steps!</h1>
+        <h1>Create a "This Person" social media message in three easy steps!</h1>
         <p>
-            Do you have an important cause, meme, or insight to share with your social network? Which of these messages is more effective?
+            Do you have an important cause, meme, or insight to share with your social network? Which of these messages
+            is more effective?
         </p>
         <div id="divExample">
             <img id="imgExample" src="img/example.jpg" alt="Two Facebook messages" />
         </div>
         <p>
-            If your message could benefit from a punchy font, classy colors, or a big arrow pointing at your head, make a "This Person"
-            message today!
+            If your message could benefit from a punchy font, classy colors, or a big arrow pointing at your head, make
+            a "This Person" message today!
         </p>
         <div class="container">
             <div class="flow">
@@ -235,13 +159,137 @@
     <div id="divBroken">
         <h1>Sorry, this page doesn't work in your browser.</h1>
         <p>
-            This page uses one or more technologies that are not supported by your browser. If this bothers you, you might want to try
-            the latest version of Firefox, Chrome, Safari, or Opera.
+            This page uses one or more technologies that are not supported by your browser. If this bothers you, you
+            might want to try the latest version of Firefox, Chrome, Safari, or Opera.
         </p>
         <p>
-            If you are running the latest version of Firefox, Chrome, Safari, or Opera and this page still doesn't work, please accept
-            my apologies. I must have missed something.
+            If you are running the latest version of Firefox, Chrome, Safari, or Opera and this page still doesn't work,
+            please accept my apologies. I must have missed something.
         </p>
     </div>
+
+    <script type="text/javascript" src="jscolor/jscolor.js"></script>
+    <script type="text/javascript">
+        function byId(id) {
+            return document.getElementById(id);
+        }
+
+        var canvas = byId('thecanvas');
+
+        function drawArrow(ctx) {
+            ctx.fillStyle = '#' + byId('txtArrow').value;
+            ctx.beginPath();
+            ctx.moveTo(15, 15);
+            ctx.lineTo(30, 70);
+            ctx.lineTo(40, 60);
+            ctx.lineTo(90, 110);
+            ctx.lineTo(110, 90);
+            ctx.lineTo(60, 40);
+            ctx.lineTo(70, 30);
+            ctx.fill();
+        }
+
+        function drawText(ctx) {
+            var txt = byId('txt').value;
+            ctx.fillStyle = '#' + byId('txtFontColor').value;
+            var fontPx = 32;
+            var fontPxInt = parseInt(byId('txtFontPx').value);
+            if (!isNaN(fontPxInt)) {
+                fontPx = fontPxInt;
+            }
+            var font = byId('ddlFont').value;
+            if (font.indexOf(' ') >= 0)
+                font = '"' + font + '"';
+
+            ctx.font = (byId('chkBold').checked ? '700' : '400') + ' ' + fontPx.toString() + 'px ' + font;
+            ctx.fillText('This Person', 115, 115);
+            var lines = txt.replace('\r\n', '\n').replace('\r', '\n').split('\n');
+            fontPx += 4;
+            for (var i = 0; i < lines.length; i++) {
+                ctx.fillText(lines[i], 20, 115 + fontPx * (i + 1));
+            }
+        }
+
+        function withDropShadow(ctx, func) {
+            ctx.save();
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = '#888888';
+            func(ctx);
+            ctx.restore();
+        }
+
+        function draw() {
+
+            var ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#' + byId('txtBorder').value;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#' + byId('txtBg').value;
+            ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+
+            if (byId('chkDropShadow').checked) {
+                withDropShadow(ctx, drawArrow);
+                withDropShadow(ctx, drawText);
+            } else {
+                drawArrow(ctx);
+                drawText(ctx);
+            }
+
+            byId('img').src = canvas.toDataURL("image/png");
+        }
+
+        if (canvas.getContext && canvas.toDataURL) {
+            var events = [{
+                    id: "txt",
+                    eventName: "keyup"
+                },
+                {
+                    id: "txtFontPx",
+                    eventName: "keyup"
+                },
+                {
+                    id: "txtFontColor",
+                    eventName: "change"
+                },
+                {
+                    id: "txtBg",
+                    eventName: "change"
+                },
+                {
+                    id: "txtBorder",
+                    eventName: "change"
+                },
+                {
+                    id: "txtArrow",
+                    eventName: "change"
+                },
+                {
+                    id: "ddlFont",
+                    eventName: "change"
+                },
+                {
+                    id: "chkBold",
+                    eventName: "change"
+                },
+                {
+                    id: "chkDropShadow",
+                    eventName: "change"
+                },
+            ];
+
+            events.forEach(function (item) {
+                byId(item.id).addEventListener(item.eventName, draw);
+            });
+            draw();
+        } else {
+            byId('divContent').style.display = "none";
+            byId('divBroken').style.display = "block";
+        }
+    </script>
 </body>
 </html>

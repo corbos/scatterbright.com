@@ -4,8 +4,23 @@
     <title>Scatterbright - Corbin March</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Corbin March - a software engineer from Saint Paul, MN." />
+    <meta name="description" content="Corbin March - a software developer from Saint Paul, MN." />
     <link rel="stylesheet" href="scatterbright.css" type="text/css" />
+    <style>
+        #elsewhere {
+            padding: 0;
+        }
+
+        #elsewhere li {
+            display: inline-block;
+            list-style-type: none;
+            border: 1px solid #171741;
+            background-color: #eee;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 0 10px 5px 0;
+        }
+    </style>
 </head>
 <body>
     <div id="divHeader">
@@ -13,7 +28,9 @@
             <a href="index.html">Scatterbright</a>
         </div>
     </div>
+
     <div class="content">
+
         <h1>Corbin March</h1>
         <p>
             I build software &#8212; for myself and others. I live in Saint Paul.
@@ -21,150 +38,83 @@
         <p>
             <a href="mailto:corbin@scatterbright.com">corbin@scatterbright.com</a>
         </p>
-    </div>
-    <div class="content">
 
-        <div class="container">
-            <div class="cell elsewhere">
-                <div>
-                    <a href="https://www.linkedin.com/in/corbinmarch">LinkedIn</a>
-                </div>
+        <h2>Elsewhere</h2>
+        <ul id="elsewhere">
+            <li><a href="https://www.linkedin.com/in/corbinmarch">LinkedIn</a></li>
+            <li><a href="https://github.com/corbos">Github</a></li>
+            <li><a href="http://stackoverflow.com/users/7625/corbin-march">StackOverflow</a></li>
+        </ul>
+
+        <h2>Noodling</h2>
+        <div class="flex">
+            <div>
+                <a href="tsp.html">
+                    <img src="img/tsp_src.png" alt="The Traveling Salesman Problem"
+                        title="The Traveling Salesman Problem">
+                </a>
             </div>
-            <div class="cell elsewhere">
-                <div>
-                    <a href="https://github.com/corbos">Github</a>
-                </div>
-            </div>
-            <div class="cell elsewhere">
-                <div>
-                    <a href="https://bitbucket.org/corbos">BitBucket</a>
-                </div>
-            </div>
-            <div class="cell elsewhere">
-                <div>
-                    <a href="http://stackoverflow.com/users/7625/corbin-march">StackOverflow</a>
-                </div>
-            </div>
-            <div class="cell elsewhere">
-                <div>
-                    <a href="https://pinboard.in/u:corbos">Pinboard</a>
-                </div>
+            <div>
+                <a href="tsp.html">Solve a Traveling Salesman Problem.</a>
             </div>
         </div>
-        <div>
-            <h2>Noodling</h2>
-        </div>
-        <div class="container">
-            <div class="cell noodle">
-                <div>
-                    <a href="tsp.html">
-                        <img src="img/tsp_src.png" alt="The Travelling Salesman Problem" title="The Travelling Salesman Problem">
-                    </a>
-                    <span>
-                        <a href="tsp.html">Solve a Travelling Salesman Problem.</a>
-                    </span>
-                </div>
+        <div class="flex">
+            <div>
+                <a href="states.html">
+                    <img src="img/st_src.jpg" alt="US states and capitals" title="US states and capitals">
+                </a>
             </div>
-            <div class="cell noodle">
-                <div>
-                    <a href="states.html">
-                        <img src="img/st_src.jpg" alt="US states and capitals" title="US states and capitals">
-                    </a>
-                    <span>
-                        <a href="states.html">Learn your US states and capitals.</a>
-                    </span>
-                </div>
-            </div>
-            <div class="cell noodle">
-                <div>
-                    <a href="timestable.html">
-                        <img src="img/tt_src.jpg" alt="Single digit multiplication" title="Single digit multiplication">
-                    </a>
-                    <span>
-                        <a href="timestable.html">Practice single digit multiplication.</a>
-                    </span>
-                </div>
-            </div>
-            <div class="cell noodle">
-                <div>
-                    <a href="sudoku.html">
-                        <img src="img/sudoku_src.png" alt="Sudoku" title="Sudoku">
-                    </a>
-                    <span>
-                        <a href="sudoku.html">Sudoku!</a>
-                    </span>
-                </div>
-            </div>
-            <div class="cell noodle">
-                <div>
-                    <a href="thisperson.html">
-                        <img src="img/image_src.jpg" alt="This person" title="This person">
-                    </a>
-                    <span>
-                        <a href="thisperson.html">Create a "This Person" message for your favorite social network.</a>
-                    </span>
-                </div>
+            <div>
+                <a href="states.html">Learn your US states and capitals.</a>
             </div>
         </div>
-        <div>
-            <h2>Writing</h2>
-        </div>
-        <div class="container">
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/discovering-relevance/37894">Discovering Relevance</a>
+        <div class="flex">
+            <div>
+                <a href="timestable.html">
+                    <img src="img/tt_src.jpg" alt="Single digit multiplication" title="Single digit multiplication">
+                </a>
             </div>
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/a-simple-trick-to-centralize-your-net-configurati-1/19030">A Simple Trick to Centralize Your .NET Configuration</a>
-            </div>
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/is-after-the-fact-static-analysis-a-code-smel-1/19039">Is After-The-Fact Static Analysis a Code Smell?</a>
-            </div>
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/reconsidering-s-2/19063">Reconsidering SVG</a>
-            </div>
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/reasoning-at-runtime-cli-expression-tre-1/19047">Reasoning at Runtime: CLI Expression Trees</a>
-            </div>
-            <div class="cell writing">
-                <a href="https://solutiondesign.com/blog/-/sdg/the-hidden-cost-of-being-rig-1/19055">The Hidden Cost of Being Right</a>
-            </div>
-            <div class="cell writing">
-                <a href="http://robowiki.net/wiki/Folded_Pattern_Matcher">An Indexed (Folded) Pattern Matcher</a>
+            <div>
+                <a href="timestable.html">Practice single digit multiplication.</a>
             </div>
         </div>
+        <div class="flex">
+            <div>
+                <a href="sudoku.html">
+                    <img src="img/sudoku_src.png" alt="Sudoku" title="Sudoku">
+                </a>
+            </div>
+            <div>
+                <a href="sudoku.html">Sudoku!</a>
+            </div>
+        </div>
+        <div class="flex">
+            <div>
+                <a href="thisperson.html">
+                    <img src="img/image_src.jpg" alt="This person" title="This person">
+                </a>
+            </div>
+            <div>
+                <a href="thisperson.html">Create a "This Person" message for your favorite social network.</a>
+            </div>
+        </div>
+
         <div>
             <h2>Robocode</h2>
-        </div>
-        <div class="container">
-            <div class="flow">
-                Program a Java tank and fight other tanks from around the world!
-                <ul>
-                    <li>
-                        <a href="http://robocode.sourceforge.net">http://robocode.sourceforge.net</a>
-                    </li>
-                    <li>
-                        <a href="http://robowiki.net">http://robowiki.net</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="flow">
-                My robots:
-                <ul>
-                    <li>
-                        <a href="robots/cjm.chalk.Chalk_2.5.Al.jar">Chalk</a>
-                    </li>
-                    <li>
-                        <a href="robots/cjm.Che_1.2.jar">Che</a>
-                    </li>
-                    <li>
-                        <a href="robots/cjm.Chomsky_1.5.jar">Chomsky</a>
-                    </li>
-                    <li>
-                        <a href="robots/cjm.Charo_1.1.jar">Charo</a>
-                    </li>
-                </ul>
-            </div>
+            Program a Java tank and fight other tanks from around the world!
+            <ul>
+                <li>
+                    <a href="http://robocode.sourceforge.net">http://robocode.sourceforge.net</a>
+                </li>
+                <li>
+                    <a href="http://robowiki.net">http://robowiki.net</a>
+                </li>
+                <li>
+                    <a href="https://github.com/corbos/robocode">My Robots</a>
+                </li>
+            </ul>
         </div>
     </div>
+
 </body>
 </html>

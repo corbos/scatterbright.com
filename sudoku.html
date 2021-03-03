@@ -13,7 +13,8 @@
         }
 
         .sudoku_text {
-            width: 20px;
+            width: 25px;
+            margin-right: 3px;
         }
 
         .sudoku_table {
@@ -22,6 +23,7 @@
 
         .sudoku_cell {
             border: 3px solid #000000;
+            padding: 5px;
         }
 
         .puzzle {
@@ -30,7 +32,7 @@
 
         .strike {
             text-decoration: line-through;
-            color: #FF0000;
+            color: #830202;
         }
     </style>
     <script type="text/javascript" src="script/sudoku.js"></script>
@@ -51,33 +53,38 @@
     <div class="content">
         <h1>sudoku!</h1>
         <p>
-            <a href="https://en.wikipedia.org/wiki/Sudoku">Sudoku</a> is an obnoxious game in which you place numbers in a puzzle with some constraint. For example, in
-            the puzzle below you place the numbers 1 through 9 so no number is repeated in a row, a column, or section. A
-            section is one of the three-by-three subgrids outlined in black. There are many variations, but the form below
-            is common.
+            <a href="https://en.wikipedia.org/wiki/Sudoku">Sudoku</a> is a game in which you place numbers in a puzzle
+            with constraints. For example, in the puzzle below you place the numbers 1 through 9 so no number is
+            repeated in a row, a column, or section. A section is one of the three-by-three subgrids outlined in black.
+            There are many variations, but the form below is common.
         </p>
         <p>
             I decided to build a sudoku solver after reading Peter Norvig's
-            <a href="http://norvig.com/sudoku.html">Solving Every Sudoku Puzzle</a>. There's more about my solver on Bitbucket:
+            <a href="http://norvig.com/sudoku.html">Solving Every Sudoku Puzzle</a>. There's more about my solver on
+            Bitbucket:
             <a href="https://bitbucket.org/corbos/sudoku">https://bitbucket.org/corbos/sudoku</a>.
         </p>
         <div class="container">
             <div class="flow">
                 <h2>Play</h2>
                 <ol>
-                    <li>Fill in your known numbers or select one of the pre-defined puzzles from the list. (Actually, you don't
-                        <em>have</em> to fill anything in. The solver will "solve" an empty puzzle without complaint. It's easy!)</li>
+                    <li>Fill in your known numbers or select one of the pre-defined puzzles from the list. (Actually,
+                        you don't
+                        <em>have</em> to fill anything in. The solver will "solve" an empty puzzle without complaint.
+                        It's easy!)</li>
                     <li>Click the "Solve" button.</li>
                     <li>Savor your solution.</li>
                 </ol>
                 <h2>Disappointments</h2>
                 <ol>
-                    <li>The solver just solves the stupid puzzle. It doesn't share anything about its process. That is, you don't
+                    <li>The solver just solves the stupid puzzle. It doesn't share anything about its process. That is,
+                        you don't
                         learn anything. It's
                         <span class="strike">kind of</span> cheating.</li>
                     <li>If your puzzle is unsolvable, the solver won't tell you why. It just complains.</li>
                     <li>If there's more than one solution, the solver stops after the first. It's lazy like that.</li>
-                    <li>The solver employs some very unattractive JavaScript. That isn't disappointing to everyone, but it's
+                    <li>The solver employs some very unattractive JavaScript. That isn't disappointing to everyone, but
+                        it's
                         bound to bother someone.</li>
                 </ol>
             </div>
@@ -90,10 +97,18 @@
                     <div id="puzzleFooter">
                         <select onchange="sudokuUI.load(this.value);" id="ddl">
                             <option value="">Select a puzzle</option>
-                            <option value="XXX268XX5X6XXXXXXX3X5XXXX8X52X7XXXXX7XX4X9XX2XXXXX6X34X1XXXX5X9XXXXXXX2X2XX975XXX">Load 1</option>
-                            <option value="XX4X628XXX8XX1X62XXXX4XXXXX3XXXXX2XX97XXXXX38XX1XXXXX7XXXXX7XXXX23X9XX8XXX623X1XX">Load 2</option>
-                            <option value="XX2XX194XXXXXXXX2X5XX3XX6XXXXXX64XX34XX5X8XX23XX91XXXXXX3XX6XX9X1XXXXXXXX692XX5XX">Load 3</option>
-                            <option value="58X6XXXXXXXXXX9XXXX37X4XXXX4XXXXX7X99XX731XX87X3XXXXX2XXXX5X32XXXX8XXXXXXXXXX2X61">Load 4</option>
+                            <option
+                                value="XXX268XX5X6XXXXXXX3X5XXXX8X52X7XXXXX7XX4X9XX2XXXXX6X34X1XXXX5X9XXXXXXX2X2XX975XXX">
+                                Load 1</option>
+                            <option
+                                value="XX4X628XXX8XX1X62XXXX4XXXXX3XXXXX2XX97XXXXX38XX1XXXXX7XXXXX7XXXX23X9XX8XXX623X1XX">
+                                Load 2</option>
+                            <option
+                                value="XX2XX194XXXXXXXX2X5XX3XX6XXXXXX64XX34XX5X8XX23XX91XXXXXX3XX6XX9X1XXXXXXXX692XX5XX">
+                                Load 3</option>
+                            <option
+                                value="58X6XXXXXXXXXX9XXXX37X4XXXX4XXXXX7X99XX731XX87X3XXXXX2XXXX5X32XXXX8XXXXXXXXXX2X61">
+                                Load 4</option>
                         </select>
                         <button type="reset">Clear</button>
                         <button type="button" onclick="sudokuUI.solve();">Solve</button>
